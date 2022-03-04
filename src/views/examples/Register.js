@@ -31,6 +31,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
@@ -121,6 +122,20 @@ const Register = () => {
                   />
                 </InputGroup>
               </FormGroup>
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Confirm Password"
+                    type="password"
+                    autoComplete="confirm-password"
+                  />
+                </InputGroup>
+              </FormGroup>
               <div className="text-muted font-italic">
                 <small>
                   password strength:{" "}
@@ -153,6 +168,20 @@ const Register = () => {
                 <Button className="mt-4" color="primary" type="button">
                   Create account
                 </Button>
+                <p/>
+                <div mt={3} mb={1} textAlign="center">
+                <div variant="button" color="text">
+                Don&apos;t have an account?{" "}
+                <Link
+                  to="/auth/login"
+                  variant="button"
+                  color="info"
+                  fontWeight="medium"
+                  textGradient>
+                  Sign up
+                </Link>
+              </div>
+              </div>
               </div>
             </Form>
           </CardBody>

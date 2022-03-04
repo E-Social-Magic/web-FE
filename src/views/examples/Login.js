@@ -32,7 +32,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 import {useHistory} from 'react-router-dom';
@@ -159,6 +159,19 @@ const Login = () => {
                 <Button className="my-4" color="primary" onClick={handleSubmit} type="button">
                   Sign in
                 </Button>
+                <div mt={3} mb={1} textAlign="center">
+                <div variant="button" color="text">
+                Already have an account?{" "}
+                <Link
+                  to="/auth/register"
+                  variant="button"
+                  color="info"
+                  fontWeight="medium"
+                  textGradient>
+                  Register
+                </Link>
+              </div>
+              </div>
               </div>
             </Form>
           </CardBody>
