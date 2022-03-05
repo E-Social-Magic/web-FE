@@ -38,12 +38,12 @@ import {
   import React from "react";
 
 
-  const Posts = () => {
+  const Users = () => {
     const [data, setData] = useState({ posts: [] });
   
     useEffect(async () => {
       const result = await axios(
-        'https://web-be-brmc9.ondigitalocean.app/api/posts',
+        'https://web-be-brmc9.ondigitalocean.app/api/users',
       );
       setData(result.data);
       console.log(data.posts);
@@ -73,9 +73,9 @@ import {
                 >
                   <thead className="thead-dark">
                     <tr>
-                      <th scope="col">Title</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Content</th>
-                      <th scope="col">Image</th>                      <th scope="col">Visible</th>
+                      <th scope="col">Visible</th>
                       <th scope="col">User_id</th>
                       <th scope="col">Create at</th>
                       <th scope="col">Update at</th>
@@ -92,7 +92,6 @@ import {
                         </span>
                       </th>
                       <td>{item.content}</td>
-                      <td><img src={item.img} width="200px" height="200px"></img></td>
                       <td>
                       {item.visible}
                       </td>
@@ -155,5 +154,5 @@ import {
     );
   };
   
-  export default Posts;
+  export default Users;
   

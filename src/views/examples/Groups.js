@@ -24,12 +24,9 @@ import {
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
-    Media,
-    Progress,
     Table,
     Container,
     Row,
-    UncontrolledTooltip,
   } from "reactstrap";
   // core components
   import Header from "components/Headers/Header.js";
@@ -38,15 +35,16 @@ import {
   import React from "react";
 
 
-  const Posts = () => {
-    const [data, setData] = useState({ posts: [] });
+
+  const Groups = () => {
+    const [data, setData] = useState({ groups: [] });
   
     useEffect(async () => {
       const result = await axios(
-        'https://web-be-brmc9.ondigitalocean.app/api/posts',
+        'https://web-be-brmc9.ondigitalocean.app/api/groups',
       );
       setData(result.data);
-      console.log(data.posts);
+      console.log("ha",data.groups);
     }, []);
 
     const onDelete = (id) => {
@@ -54,7 +52,7 @@ import {
       }
 
     return (
-      <div>
+      <>
         <Header />
         {/* Page content */}
         <Container className="mt--7" fluid>
@@ -73,36 +71,27 @@ import {
                 >
                   <thead className="thead-dark">
                     <tr>
-                      <th scope="col">Title</th>
-                      <th scope="col">Content</th>
-                      <th scope="col">Image</th>                      <th scope="col">Visible</th>
-                      <th scope="col">User_id</th>
+                      <th scope="col">name</th>
+                      <th scope="col">private_dt</th>
+                      <th scope="col">Visible</th>
                       <th scope="col">Create at</th>
                       <th scope="col">Update at</th>
                       <th scope="col" />
                     </tr>
                   </thead>
                   <tbody>
-                  {data.posts.map((item) =>( 
+                  {data.groups.map((item) =>( 
                     <tr>
                     
                       <th scope="row" key={item.id}>
                         <span className="mb-0 text-sm">
-                           {item.title}
+                           {item.name}
                         </span>
                       </th>
-                      <td>{item.content}</td>
-                      <td><img src={item.img} width="200px" height="200px"></img></td>
+                      <td>{item.private_dt}</td>
                       <td>
                       {item.visible}
-                      </td>
-                      <td>
-                        <Badge color="" className="badge-dot mr-4">
-                          <i className="bg-warning" />
-                          {item.user_id}
-                        </Badge>
-                      </td>
-               
+                      </td>   
                       <td>
                         {item.createdAt}
                       </td>
@@ -151,9 +140,9 @@ import {
             </div>
           </Row>
         </Container>
-      </div>
+      </>
     );
   };
   
-  export default Posts;
+  export default Groups;
   

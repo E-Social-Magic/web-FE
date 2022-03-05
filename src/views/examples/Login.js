@@ -53,7 +53,7 @@ const Login = () => {
     if(user.data.success === true){
       console.log(user.data.msg);
       alert("Logged in successfully!");
-      history.push('/dashboard')
+      history.push('/admin/index')
       //chuyen qua dashboard kem theo duw lieuu
     }else{
       console.log("Logged in unsuccessfully");

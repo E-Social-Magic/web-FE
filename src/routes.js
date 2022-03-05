@@ -21,7 +21,9 @@ import Maps from "views/examples/Maps.js";
 import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
 import Tables from "views/examples/Tables.js";
+import Users from "views/examples/Users.js"
 import Posts from "views/examples/Posts.js";
+import Groups from "views/examples/Groups.js"
 import Comments from "views/examples/Comments.js";
 import Icons from "views/examples/Icons.js";
 
@@ -55,6 +57,13 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/users",
+    name: "Users",
+    icon: "ni ni-single-02 text-yellow",
+    component: Users,
+    layout: "/admin",
+  },
+  {
     path: "/posts",
     name: "Posts",
     icon: "ni ni-bullet-list-67 text-red",
@@ -62,9 +71,16 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/groups",
+    name: "Groups",
+    icon: "ni ni-bullet-list-67 text-red",
+    Component: Groups,
+    layout: "/admin",
+  },
+  {
     path: "/comments",
     name: "Comments",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "ni ni-support-16 text-red",
     component: Comments,
     layout: "/admin",
   },
@@ -79,6 +95,13 @@ var routes = [
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
+    component: Login,
+    layout: "/auth",
+  },
+  {
+    path: "/logout",
+    name: "Logout",
+    icon: "ni ni-user-run text-pink",
     component: Login,
     layout: "/auth",
   },
