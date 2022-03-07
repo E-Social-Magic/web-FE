@@ -37,29 +37,28 @@ import axios from "axios";
 
 import { useHistory } from "react-router-dom";
 
-const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Forgot = () => {
+  const [email, setEmail] = useState("");
   const history = useHistory();
 
-  async function loginUser(credentials) {
+  async function sendCode(credentials) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/login",
+      "https://web-be-brmc9.ondigitalocean.app/api/sendmail_forget",
       credentials
     );
   }
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      const user = await loginUser({ username, password });
-      console.log(user.data.succes);
-      if (user.data.success === true) {
+      const user = await sendCode({ email });
+       console.log(user.data.account.email)
+      if (user.data.account.email === email) {
         console.log(user.data.msg);
-        alert("Logged in successfully!");
-        history.push("/admin/index");
+        alert("Please check your email to receive a new password");
+        history.push("/auth/newpass");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
-        console.log("Logged in unsuccessfully");
+        alert("Logged in unsuccessfully");
       }
     } catch (error) {
       console.log(error);
@@ -81,6 +80,9 @@ const Login = () => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
+            <div className="text-center text-muted mb-4">
+              <small>Enter your email to reset password!</small>
+            </div>
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
@@ -90,42 +92,14 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Username"
+                    placeholder="e.social@example.com"
                     type="text"
-                    onChange={(e) => setUsername(e.target.value)}
-                    label="Username"
+                    onChange={(e) => setEmail(e.target.value)}
+                    label="Email"
                     autoComplete="new-email"
                   />
                 </InputGroup>
               </FormGroup>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-lock-circle-open" />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Password"
-                    type="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                    autoComplete="new-password"
-                  />
-                </InputGroup>
-              </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
-                  className="custom-control-input"
-                  id=" customCheckLogin"
-                  type="checkbox"
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
-                >
-                  <span className="text-muted">Remember me</span>
-                </label>
-              </div>
               <div className="text-center">
                 <Button
                   className="my-4"
@@ -133,7 +107,7 @@ const Login = () => {
                   onClick={handleSubmit}
                   type="button"
                 >
-                  Sign in
+                  Change password
                 </Button>
                 <div mt={3} mb={1} textAlign="center"></div>
               </div>
@@ -142,11 +116,10 @@ const Login = () => {
         </Card>
         <Row className="mt-3">
           <Col xs="6">
-            <a
-              className="text-light"
-              href="/auth/forgot"
-            >
-              <small>Forgot password?</small>
+            <a className="text-light" href="/auth/login">
+              <small>
+                <i className="fas fa-arrow-left"></i> Back
+              </small>
             </a>
           </Col>
         </Row>
@@ -155,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Forgot;

@@ -18,8 +18,9 @@
 import Index from "views/Index.js";
 import Profile from "views/examples/Profile.js";
 import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
 import Login from "views/examples/Login.js";
+import Forgot from "views/examples/Forgot.js"
+import NewPass from "views/examples/NewPass.js"
 import Tables from "views/examples/Tables.js";
 import Users from "views/examples/Users.js"
 import Posts from "views/examples/Posts.js";
@@ -99,17 +100,24 @@ var routes = [
     layout: "/auth",
   },
   {
+    path: "/forgot",
+    name: "Forgot",
+    icon: "ni ni-key-25 text-info",
+    component: Forgot,
+    layout: "/auth",
+  },
+  {
+    path: "/newpass",
+    name: "NewPass",
+    icon: "ni ni-key-25 text-info",
+    component: NewPass,
+    layout: "/auth",
+  },
+  {
     path: "/logout",
     name: "Logout",
     icon: "ni ni-user-run text-pink",
     component: Login,
-    layout: "/auth",
-  },
-  {
-    path: "/register",
-    name: "Register",
-    icon: "ni ni-circle-08 text-pink",
-    component: Register,
     layout: "/auth",
   },
 ];
