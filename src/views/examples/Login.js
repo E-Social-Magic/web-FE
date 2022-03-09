@@ -32,19 +32,18 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
-
+// import Forgot from "./Forgot";
+// import Admin from "layouts/Admin";
 const cookies = new Cookies();
-
 const Login = () => { 
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("")
-  const history = useHistory();
+  const history = useHistory(); 
 
   async function loginUser(credentials) {
     return axios.post(
@@ -59,10 +58,9 @@ const Login = () => {
       console.log(user.data);
       console.log(user.headers);
 
-      if (user.data.token) {
-        cookies.set('token',user.data.token)
+      if (user.data.token && user.data.role === "admin") {
+        cookies.set('token',user.data.token);
         alert("Logged in successfully!");
-        
         history.push("/admin/index");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
@@ -76,6 +74,7 @@ const Login = () => {
 
   return (
     <>
+    {/* {cookies.get('token')?<Admin/>: */}
       <Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
@@ -160,6 +159,7 @@ const Login = () => {
           </Col>
         </Row>
       </Col>
+      {/* } */}
     </>
   );
 };

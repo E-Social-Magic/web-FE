@@ -51,6 +51,7 @@ const Users = () => {
         }
       }
     );
+    console.log(result.data.users);
     setData(result.data);
   }, []);
 
@@ -77,7 +78,6 @@ const Users = () => {
                     <th scope="col">Visible</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Password</th>
                     <th scope="col">Role</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
@@ -92,7 +92,6 @@ const Users = () => {
                       </th>
                       <td>{item.username}</td>
                       <td>{item.email}</td>
-                      <td>{item.password}</td>
                       <td>{item.role}</td>
                       <td>{item.updatedAt}</td>
                       <td className="text-right">

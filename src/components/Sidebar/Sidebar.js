@@ -72,6 +72,8 @@ const Sidebar = (props) => {
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
       return (
+        <>
+        {(prop.layout !=="/auth")?
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}
@@ -82,7 +84,7 @@ const Sidebar = (props) => {
             <i className={prop.icon} />
             {prop.name}
           </NavLink>
-        </NavItem>
+        </NavItem>:""}</>
       );
     });
   };
@@ -180,7 +182,7 @@ const Sidebar = (props) => {
               <DropdownItem divider />
               <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
                 <i className="ni ni-user-run" />
-                <span>Logoutt</span>
+                <span>Logout</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
