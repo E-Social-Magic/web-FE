@@ -36,13 +36,20 @@ import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
 
 const Users = () => {
   const [data, setData] = useState({ users: [] });
 
   useEffect(async () => {
     const result = await axios(
-      "https://web-be-brmc9.ondigitalocean.app/api/users"
+      "https://web-be-brmc9.ondigitalocean.app/api/users",
+      {
+        headers:{
+          "Authorization":"Bearer " + cookies.get('token')
+        }
+      }
     );
     setData(result.data);
   }, []);

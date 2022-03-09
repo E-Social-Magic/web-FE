@@ -34,8 +34,10 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import Cookies from 'universal-cookie';
 import { useHistory } from "react-router-dom";
+
+const cookies = new Cookies();
 
 const Login = () => { 
 
@@ -57,8 +59,8 @@ const Login = () => {
       console.log(user.data);
       console.log(user.headers);
 
-      if (user.data.success == true) {
-        
+      if (user.data.token) {
+        cookies.set('token',user.data.token)
         alert("Logged in successfully!");
         
         history.push("/admin/index");
