@@ -33,8 +33,23 @@ import {
   Container,
   Media,
 } from "reactstrap";
+import axios from "axios";
 
 const AdminNavbar = (props) => {
+  async function logoutUser(credentials) {
+    return axios.get(
+      "https://web-be-brmc9.ondigitalocean.app/api/logout",
+      credentials
+    );
+  }
+  const handleLogout = async (e) => {
+    try {
+      const user = await logoutUser();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -61,18 +76,10 @@ const AdminNavbar = (props) => {
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={
-                        require("../../assets/img/theme/team-4-800x800.jpg")
-                          .default
-                      }
-                    />
-                  </span>
+                  <i className="ni ni-circle-08"></i>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      Admin
                     </span>
                   </Media>
                 </Media>
@@ -98,7 +105,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="/auth/login" onClick={handleLogout}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

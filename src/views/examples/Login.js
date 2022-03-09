@@ -37,29 +37,35 @@ import axios from "axios";
 
 import { useHistory } from "react-router-dom";
 
-const Login = () => {
+const Login = () => { 
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("")
   const history = useHistory();
 
   async function loginUser(credentials) {
     return axios.post(
       "https://web-be-brmc9.ondigitalocean.app/api/login",
-      credentials
+      credentials,
     );
   }
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
       const user = await loginUser({ username, password });
-      console.log(user.data.succes);
-      if (user.data.success === true) {
-        console.log(user.data.msg);
+      console.log(user.data);
+      console.log(user.headers);
+
+      if (user.data.success == true) {
+        
         alert("Logged in successfully!");
+        
         history.push("/admin/index");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
-        console.log("Logged in unsuccessfully");
+        console.log("Details do not match!");
+        setError("Details do not match!")
       }
     } catch (error) {
       console.log(error);
@@ -81,6 +87,7 @@ const Login = () => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
+                        {(error !="")?(<div className="error text-muted text-center">{error}</div>):""}
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">

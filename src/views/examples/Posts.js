@@ -17,98 +17,79 @@
 */
 // reactstrap components
 import {
-    Badge,
-    Card,
-    CardHeader,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    Media,
-    Progress,
-    Table,
-    Container,
-    Row,
-    UncontrolledTooltip,
-  } from "reactstrap";
-  // core components
-  import Header from "components/Headers/Header.js";
-  import { useEffect, useState} from 'react';
-  import axios from "axios";
-  import React from "react";
+  Badge,
+  Card,
+  CardHeader,
+  DropdownMenu,
+  DropdownItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  Media,
+  Progress,
+  Table,
+  Container,
+  Row,
+  UncontrolledTooltip,
+} from "reactstrap";
+// core components
+import Header from "components/Headers/Header.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
 
+const Posts = () => {
+  const [data, setData] = useState({ posts: [] });
 
-  const Posts = () => {
-    const [data, setData] = useState({ posts: [] });
-  
-    useEffect(async () => {
-      const result = await axios(
-        'https://web-be-brmc9.ondigitalocean.app/api/posts',
-      );
-      setData(result.data);
-      console.log(data.posts);
-    }, []);
+  useEffect(async () => {
+    const result = await axios(
+      "https://web-be-brmc9.ondigitalocean.app/api/posts"
+    );
+    setData(result.data);
+    console.log(data.posts);
+  }, []);
 
-    const onDelete = (id) => {
-        axios.delete(`https://web-be-brmc9.ondigitalocean.app/api/posts${id}`)
-      }
+  return (
+    <div>
+      <Header />
+      {/* Page content */}
+      <Container className="mt--7" fluid>
+        {/* Table */}
 
-    return (
-      <div>
-        <Header />
-        {/* Page content */}
-        <Container className="mt--7" fluid>
-          {/* Table */}
-  
-          {/* Dark table */}
-          <Row className="mt-5">
-            <div className="col">
-              <Card className="bg-default shadow">
-                <CardHeader className="bg-transparent border-0">
-                  <h3 className="text-white mb-0">Card tables</h3>
-                </CardHeader>
-                <Table
-                  className="align-items-center table-dark table-flush"
-                  responsive
-                >
-                  <thead className="thead-dark">
+        {/* Dark table */}
+        <Row className="mt-5">
+          <div className="col">
+            <Card className="bg-default shadow">
+              <CardHeader className="bg-transparent border-0">
+                <h3 className="text-white mb-0">Card tables</h3>
+              </CardHeader>
+              <Table
+                className="align-items-center table-dark table-flush"
+                responsive
+              >
+                <thead className="thead-dark">
+                  <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Content</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Visible</th>
+                    <th scope="col">Create at</th>
+                    <th scope="col">Update at</th>
+                    <th scope="col" />
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.posts.map((item) => (
                     <tr>
-                      <th scope="col">Title</th>
-                      <th scope="col">Content</th>
-                      <th scope="col">Image</th>                      <th scope="col">Visible</th>
-                      <th scope="col">User_id</th>
-                      <th scope="col">Create at</th>
-                      <th scope="col">Update at</th>
-                      <th scope="col" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                  {data.posts.map((item) =>( 
-                    <tr>
-                    
                       <th scope="row" key={item.id}>
-                        <span className="mb-0 text-sm">
-                           {item.title}
-                        </span>
+                        <span className="mb-0 text-sm">{item.title}</span>
                       </th>
                       <td>{item.content}</td>
-                      <td><img src={item.img} width="200px" height="200px"></img></td>
                       <td>
-                      {item.visible}
+                        <i className="ni ni-image"></i>
                       </td>
-                      <td>
-                        <Badge color="" className="badge-dot mr-4">
-                          <i className="bg-warning" />
-                          {item.user_id}
-                        </Badge>
-                      </td>
-               
-                      <td>
-                        {item.createdAt}
-                      </td>
-                      <td>
-                        {item.updatedAt}
-                      </td>
+                      <td>{item.visible}</td>
+                      <td>{item.createdAt}</td>
+                      <td>{item.updatedAt}</td>
                       <td className="text-right">
                         <UncontrolledDropdown>
                           <DropdownToggle
@@ -124,7 +105,7 @@ import {
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
                               href="#pablo"
-                              onClick={() => onDelete(data.id)}
+                              onClick={(e) => e.preventDefault()}
                             >
                               Delete
                             </DropdownItem>
@@ -144,16 +125,15 @@ import {
                         </UncontrolledDropdown>
                       </td>
                     </tr>
-                    ))} 
-                  </tbody>
-                </Table>
-              </Card>
-            </div>
-          </Row>
-        </Container>
-      </div>
-    );
-  };
-  
-  export default Posts;
-  
+                  ))}
+                </tbody>
+              </Table>
+            </Card>
+          </div>
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+export default Posts;

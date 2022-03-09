@@ -37,7 +37,7 @@ import axios from "axios";
 
 import { useHistory } from "react-router-dom";
 
-const NewPass = () => {
+const NewPass = ({email}) => {
   const [code, setCode] = useState("");
   const [newPass, setNewPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
@@ -45,17 +45,17 @@ const NewPass = () => {
 
   async function newPassWord(credentials) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/new_password/nguyenthithuha2911ntth@gmail.com",
+      "https://web-be-brmc9.ondigitalocean.app/api/sendmail_forget/confirm",
       credentials
     );
   }
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      const user = await newPassWord({ code, newPass, confirmPass });
+      const user = await newPassWord({email, code, newPass, confirmPass });
       console.log(user.data.succes);
       if (user.data.success === true) {
-        console.log(user.data.msg);
+        console.log(user.data.message);
         alert("Logged in successfully!");
         history.push("/admin/index");
         //chuyen qua dashboard kem theo duw lieuu

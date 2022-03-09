@@ -34,28 +34,30 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import NewPass from './NewPass'
 import { useHistory } from "react-router-dom";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
+  const [nextStep,setStep] = useState(false) 
   const history = useHistory();
 
-  async function sendCode(credentials) {
+  async function sendCode(email) {
     return axios.post(
       "https://web-be-brmc9.ondigitalocean.app/api/sendmail_forget",
-      credentials
+      {email:email}
     );
   }
   const handleSubmit = async (e) => {
     // e.preventDefault();
+  
     try {
-      const user = await sendCode({ email });
-       console.log(user.data.account.email)
-      if (user.data.account.email === email) {
-        console.log(user.data.msg);
+      const user = await sendCode( email );
+      console.log(email);
+      if (user.data.email === email) {
+        setStep(true)
         alert("Please check your email to receive a new password");
-        history.push("/auth/newpass");
+        // history.push("/auth/newpass");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
         alert("Logged in unsuccessfully");
@@ -66,8 +68,10 @@ const Forgot = () => {
   };
 
   return (
-    <>
-      <Col lg="5" md="7">
+    <> 
+      {nextStep?<NewPass email ={email} />
+
+      :<Col lg="5" md="7">
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
@@ -124,6 +128,8 @@ const Forgot = () => {
           </Col>
         </Row>
       </Col>
+     
+      }
     </>
   );
 };

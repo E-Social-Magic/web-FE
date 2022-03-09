@@ -16,17 +16,16 @@
 
 */
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
 import Login from "views/examples/Login.js";
 import Forgot from "views/examples/Forgot.js"
 import NewPass from "views/examples/NewPass.js"
 import Tables from "views/examples/Tables.js";
 import Users from "views/examples/Users.js"
 import Posts from "views/examples/Posts.js";
-import Groups from "views/examples/Groups.js"
+import Videos from "views/examples/Videos.js"
+import Coins from "views/examples/Coins.js"
+import Groups from "views/examples/Groups.js";
 import Comments from "views/examples/Comments.js";
-import Icons from "views/examples/Icons.js";
 
 var routes = [
   {
@@ -34,27 +33,6 @@ var routes = [
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
     component: Index,
-    layout: "/admin",
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "ni ni-planet text-blue",
-    component: Icons,
-    layout: "/admin",
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "ni ni-pin-3 text-orange",
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
     layout: "/admin",
   },
   {
@@ -67,21 +45,35 @@ var routes = [
   {
     path: "/posts",
     name: "Posts",
-    icon: "ni ni-bullet-list-67 text-red",
+    icon: "ni ni-album-2 text-red",
     component: Posts,
     layout: "/admin",
   },
   {
     path: "/groups",
     name: "Groups",
-    icon: "ni ni-bullet-list-67 text-red",
-    Component: Groups,
+    icon: "ni ni-folder-17 text-red",
+    component: Groups,
+    layout: "/admin",
+  },
+  {
+    path: "/videos",
+    name: "Videos",
+    icon: "ni ni-button-play text-red",
+    component: Videos,
+    layout: "/admin",
+  },
+  {
+    path: "/coins",
+    name: "Coins",
+    icon: "ni ni-money-coins text-yellow",
+    component: Coins,
     layout: "/admin",
   },
   {
     path: "/comments",
     name: "Comments",
-    icon: "ni ni-support-16 text-red",
+    icon: "ni ni-chat-round text-red",
     component: Comments,
     layout: "/admin",
   },
@@ -112,13 +104,6 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: NewPass,
     layout: "/auth",
-  },
-  {
-    path: "/logout",
-    name: "Logout",
-    icon: "ni ni-user-run text-pink",
-    component: Login,
-    layout: "/auth",
-  },
+  }
 ];
 export default routes;
