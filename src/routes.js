@@ -38,29 +38,22 @@ var routes = [
   {
     path: "/users",
     name: "Users",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "ni ni-single-02 text-brown",
     component: Users,
     layout: "/admin",
   },
   {
     path: "/posts",
     name: "Posts",
-    icon: "ni ni-album-2 text-red",
+    icon: "ni ni-album-2 text-green",
     component: Posts,
     layout: "/admin",
   },
   {
     path: "/groups",
     name: "Groups",
-    icon: "ni ni-folder-17 text-red",
+    icon: "ni ni-folder-17 text-blue",
     component: Groups,
-    layout: "/admin",
-  },
-  {
-    path: "/videos",
-    name: "Videos",
-    icon: "ni ni-button-play text-red",
-    component: Videos,
     layout: "/admin",
   },
   {
@@ -73,7 +66,7 @@ var routes = [
   {
     path: "/comments",
     name: "Comments",
-    icon: "ni ni-chat-round text-red",
+    icon: "ni ni-chat-round text-pink",
     component: Comments,
     layout: "/admin",
   },

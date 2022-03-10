@@ -77,7 +77,9 @@ const Groups = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Avatar</th>
                     <th scope="col">Visible</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
@@ -88,8 +90,19 @@ const Groups = () => {
                   {data.groups.map((item) => (
                     <tr>
                       <th scope="row" key={item.id}>
-                        <span className="mb-0 text-sm">{item.name}</span>
+                        <span className="mb-0 text-sm">{item.group_name}</span>
                       </th>
+                      <td>{item.subject}</td>
+                      <td>
+                        <img
+                src={item.avatar}
+                alt="E-Social"
+                border="0"
+                width={"150px"}
+              ></img>
+                
+            
+              </td>
                       <td>{item.visible}</td>
                       <td>{item.createdAt}</td>
                       <td>{item.updatedAt}</td>

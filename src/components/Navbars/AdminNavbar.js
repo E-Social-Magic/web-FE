@@ -34,9 +34,10 @@ import {
   Media,
 } from "reactstrap";
 import axios from "axios";
-import Cookies from 'universal-cookie';
-
-const AdminNavbar = (props) => {  
+import Cookies from "universal-cookie";
+import { useHistory } from "react-router-dom";
+const AdminNavbar = (props) => {
+  const history = useHistory();
   async function logoutUser(credentials) {
     return axios.get(
       "https://web-be-brmc9.ondigitalocean.app/api/logout",
@@ -46,10 +47,9 @@ const AdminNavbar = (props) => {
   const handleLogout = async (e) => {
     try {
       const user = await logoutUser();
-      if(!user.data.token)
-      {
-        Cookies.remove('token');
-        window.location.href = '/';
+      if (!user.data.token) {
+        Cookies.remove("token");
+        history.push("/auth/login") ;
       }
     } catch (error) {
       console.log(error);
@@ -84,9 +84,7 @@ const AdminNavbar = (props) => {
                 <Media className="align-items-center">
                   <i className="ni ni-circle-08"></i>
                   <Media className="ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm font-weight-bold">
-                      Admin
-                    </span>
+                    <span className="mb-0 text-sm font-weight-bold">Admin</span>
                   </Media>
                 </Media>
               </DropdownToggle>
@@ -111,7 +109,7 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem  onClick={handleLogout}>
+                <DropdownItem to="/auth/login" tag={Link} onClick={handleLogout}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

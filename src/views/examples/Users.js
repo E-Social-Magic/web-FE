@@ -81,7 +81,7 @@ const Users = () => {
                     <th scope="col">Role</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
-                    <th scope="col" />
+                    <th scope="col" ><i className="ni ni-settings-gear-65"></i></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,6 +93,7 @@ const Users = () => {
                       <td>{item.username}</td>
                       <td>{item.email}</td>
                       <td>{item.role}</td>
+                      <td>{item.createdAt}</td>
                       <td>{item.updatedAt}</td>
                       <td className="text-right">
                         <UncontrolledDropdown>

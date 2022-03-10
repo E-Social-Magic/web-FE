@@ -71,10 +71,13 @@ const Posts = () => {
                     <th scope="col">Title</th>
                     <th scope="col">Content</th>
                     <th scope="col">Image</th>
+                    <th scope="col">Video</th>
                     <th scope="col">Visible</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
-                    <th scope="col" />
+                    <th scope="col">
+                      <i className="ni ni-settings-gear-65"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -85,7 +88,28 @@ const Posts = () => {
                       </th>
                       <td>{item.content}</td>
                       <td>
-                        <i className="ni ni-image"></i>
+                        {item.images.map((ite) => (
+                          <p>
+                            <img
+                              src={ite}
+                              alt="E-social"
+                              border="0"
+                              width={"150px"}
+                            >
+                              {console.log(ite)}
+                            </img>
+                          </p>
+                        ))}
+                      </td>
+                      <td>
+                        {item.videos.map((ite) => (
+                          <p>
+                      <video controls  width="150px">
+  <source src={ite}  border="0"
+                             />
+</video>
+                          </p>
+                        ))}
                       </td>
                       <td>{item.visible}</td>
                       <td>{item.createdAt}</td>
