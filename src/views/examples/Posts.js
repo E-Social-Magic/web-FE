@@ -70,9 +70,14 @@ const Posts = () => {
                   <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Content</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">Video</th>
+                    <th scope="col">Images</th>
+                    <th scope="col">Videos</th>
+                    <th scope="col">Votes</th>
+                    <th scope="col">Voteups</th>
+                    <th scope="col">Votedowns</th>
+                    <th scope="col">Comments</th>
                     <th scope="col">Visible</th>
+               
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
                     <th scope="col">
@@ -104,14 +109,18 @@ const Posts = () => {
                       <td>
                         {item.videos.map((ite) => (
                           <p>
-                      <video controls  width="150px">
-  <source src={ite}  border="0"
-                             />
-</video>
+                            <video controls width="150px">
+                              <source src={ite} border="0" />
+                            </video>
                           </p>
                         ))}
                       </td>
+                      <td>{item.votes}</td>
+                      <td>{item.voteups}</td>
+                      <td>{item.votedowns}</td>
+                      <td>{item.comments}</td>
                       <td>{item.visible}</td>
+                      
                       <td>{item.createdAt}</td>
                       <td>{item.updatedAt}</td>
                       <td className="text-right">

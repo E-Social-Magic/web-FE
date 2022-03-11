@@ -79,6 +79,7 @@ const Users = () => {
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
+                    <th scope="col">Votes</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
                     <th scope="col" ><i className="ni ni-settings-gear-65"></i></th>

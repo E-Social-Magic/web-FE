@@ -63,13 +63,13 @@ var routes = [
     component: Coins,
     layout: "/admin",
   },
-  {
-    path: "/comments",
-    name: "Comments",
-    icon: "ni ni-chat-round text-pink",
-    component: Comments,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/comments",
+  //   name: "Comments",
+  //   icon: "ni ni-chat-round text-pink",
+  //   component: Comments,
+  //   layout: "/admin",
+  // },
   {
     path: "/login",
     name: "Login",

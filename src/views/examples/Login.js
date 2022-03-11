@@ -33,22 +33,23 @@ import {
   Col,
 } from "reactstrap";
 import axios from "axios";
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
+import Notification from "./Notification";
+
 // import Forgot from "./Forgot";
 // import Admin from "layouts/Admin";
 const cookies = new Cookies();
-const Login = () => { 
-
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("")
-  const history = useHistory(); 
+  const [error, setError] = useState("");
+  const history = useHistory();
 
   async function loginUser(credentials) {
     return axios.post(
       "https://web-be-brmc9.ondigitalocean.app/api/login",
-      credentials,
+      credentials
     );
   }
   const handleSubmit = async (e) => {
@@ -59,13 +60,11 @@ const Login = () => {
       console.log(user.headers);
 
       if (user.data.token && user.data.role === "admin") {
-        cookies.set('token',user.data.token);
-        alert("Logged in successfully!");
-        history.push("/admin/index");
-        //chuyen qua dashboard kem theo duw lieuu
+        cookies.set("token", user.data.token);
+        window.location.reload()
       } else {
         console.log("Details do not match!");
-        setError("Details do not match!")
+        setError("Details do not match!");
       }
     } catch (error) {
       console.log(error);
@@ -74,8 +73,8 @@ const Login = () => {
 
   return (
     <>
-    {/* {cookies.get('token')?<Admin/>: */}
       <Col lg="5" md="7">
+        {cookies.get("token") ? <Notification /> : ""}
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
@@ -88,7 +87,11 @@ const Login = () => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-                        {(error !="")?(<div className="error text-muted text-center">{error}</div>):""}
+            {error != "" ? (
+              <div className="error text-muted text-center">{error}</div>
+            ) : (
+              ""
+            )}
             <Form role="form">
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
@@ -150,16 +153,12 @@ const Login = () => {
         </Card>
         <Row className="mt-3">
           <Col xs="6">
-            <a
-              className="text-light"
-              href="/auth/forgot"
-            >
+            <a className="text-light" href="/auth/forgot">
               <small>Forgot password?</small>
             </a>
           </Col>
         </Row>
       </Col>
-      {/* } */}
     </>
   );
 };

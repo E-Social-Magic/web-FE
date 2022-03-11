@@ -77,6 +77,7 @@ const Admin = (props) => {
           imgAlt: "...",
         }}
       />
+    
       <div className="main-content" ref={mainContent}>
         <AdminNavbar
           {...props}
