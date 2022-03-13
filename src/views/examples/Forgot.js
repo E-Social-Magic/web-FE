@@ -58,9 +58,8 @@ const Forgot = () => {
         setStep(true)
         alert("Please check your email to receive a new password");
         // history.push("/auth/newpass");
-        //chuyen qua dashboard kem theo duw lieuu
       } else {
-        alert("Logged in unsuccessfully");
+        alert("Password reset failed");
       }
     } catch (error) {
       console.log(error);
@@ -97,7 +96,7 @@ const Forgot = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="e.social@example.com"
-                    type="text"
+                    type="email"
                     onChange={(e) => setEmail(e.target.value)}
                     label="Email"
                     autoComplete="new-email"

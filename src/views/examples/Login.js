@@ -35,7 +35,7 @@ import {
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
-import Notification from "./Notification";
+// import Notification from "./Notification";
 
 // import Forgot from "./Forgot";
 // import Admin from "layouts/Admin";
@@ -44,6 +44,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [errName, setErrName] = useState("");
+  const [errPass, setErrPass] = useState("");
   const history = useHistory();
 
   async function loginUser(credentials) {
@@ -55,16 +57,28 @@ const Login = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
+      if (!username) {
+        setErrName("You must enter username");
+      }else{
+        setErrName("");
+      }
+       
+      if (!password) {
+        setErrPass("You must enter password");
+      }else{
+        setErrPass("");
+      }
       const user = await loginUser({ username, password });
       console.log(user.data);
       console.log(user.headers);
 
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token);
-        window.location.reload()
+        console.log(user.data)
+        history.push("/admin/index");
+
       } else {
-        console.log("Details do not match!");
-        setError("Details do not match!");
+        setError("Username or password incorrect!");
       }
     } catch (error) {
       console.log(error);
@@ -74,7 +88,6 @@ const Login = () => {
   return (
     <>
       <Col lg="5" md="7">
-        {cookies.get("token") ? <Notification /> : ""}
         <Card className="bg-secondary shadow border-0">
           <CardHeader className="bg-transparent pb-5">
             <div className="text-muted text-center mt-2 mb-3">
@@ -88,12 +101,18 @@ const Login = () => {
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
             {error != "" ? (
-              <div className="error text-muted text-center">{error}</div>
+              <div className="error text-danger text-center">{error}</div>
             ) : (
               ""
             )}
+
             <Form role="form">
               <FormGroup className="mb-3">
+                {errName != "" ? (
+                  <div className="error text-danger text-center">{errName}</div>
+                ) : (
+                  ""
+                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -102,7 +121,7 @@ const Login = () => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Username"
-                    type="text"
+                    type="username"
                     onChange={(e) => setUsername(e.target.value)}
                     label="Username"
                     autoComplete="new-email"
@@ -110,6 +129,11 @@ const Login = () => {
                 </InputGroup>
               </FormGroup>
               <FormGroup>
+                {errPass != "" ? (
+                  <div className="error text-danger text-center">{errPass}</div>
+                ) : (
+                  ""
+                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>

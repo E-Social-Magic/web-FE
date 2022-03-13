@@ -40,6 +40,8 @@ import { useHistory } from "react-router-dom";
 const NewPass = ({email}) => {
   const [code, setCode] = useState("");
   const [newPass, setNewPass] = useState("");
+  const [error, setError] = useState("");
+  const [errCode, setErrCode] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const history = useHistory();
 
@@ -49,21 +51,24 @@ const NewPass = ({email}) => {
       credentials
     );
   }
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  const handleSubmit = async () => {
+    if (!code) {
+      setErrCode("You must enter code");
+    }else{
+      setErrCode("");
+    }
     try {
       const user = await newPassWord({email, code, newPass, confirmPass });
       console.log(user.data.succes);
-      if (user.data.success === true) {
-        console.log(user.data.message);
+      if (user.data.success === true && newPass == confirmPass) {
+        console.log(user.data);
         alert("Logged in successfully!");
         history.push("/admin/index");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
           if(newPass !== confirmPass){
-            alert("new password and confirm password are not the same");
+            setError("New password and confirm password are not the same")
           }
-        console.log("Incorrect code or password");
       }
     } catch (error) {
       console.log(error);
@@ -89,7 +94,17 @@ const NewPass = ({email}) => {
               <small>Enter your email to reset password!</small>
             </div>
             <Form role="form">
+            {error != "" ? (
+              <div className="error text-danger text-center">{error}</div>
+            ) : (
+              ""
+            )}
             <FormGroup className="mb-3">
+            {errCode != "" ? (
+              <div className="error text-danger text-center">{errCode}</div>
+            ) : (
+              ""
+            )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
