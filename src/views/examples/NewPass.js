@@ -42,12 +42,13 @@ const NewPass = ({ email }) => {
   const [newPass, setNewPass] = useState("");
   const [error, setError] = useState("");
   const [errCode, setErrCode] = useState("");
+  const [errPass, setErrPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const history = useHistory();
 
   async function newPassWord(credentials) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/sendmail_forget/confirm",
+      "https://web-be-brmc9.ondigitalocean.app/api/sendmailForget/confirm",
       credentials
     );
   }
@@ -57,14 +58,18 @@ const NewPass = ({ email }) => {
     } else {
       setErrCode("");
     }
+    if (!newPass) {
+      setErrPass("You must enter new password");
+    } else {
+      setErrPass("");
+    }
     try {
       const user = await newPassWord({ email, code, newPass, confirmPass });
       console.log(user.data.succes);
-      if (user.data.success === true && newPass == confirmPass) {
+      if (user.data.success === true && newPass === confirmPass && newPass !== "" ) {
         console.log(user.data);
-        alert("Logged in successfully!");
-        history.push("/admin/index");
-        //chuyen qua dashboard kem theo duw lieuu
+        alert("Logged in successfully!")
+        history.push("/admin/index")
       } else {
         if (newPass !== confirmPass) {
           setError("New password and confirm password are not the same");
@@ -118,6 +123,11 @@ const NewPass = ({ email }) => {
                 </InputGroup>
               </FormGroup>
               <FormGroup>
+              {errPass != "" ? (
+                  <div className="error text-danger text-center">{errPass}</div>
+                ) : (
+                  ""
+                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>

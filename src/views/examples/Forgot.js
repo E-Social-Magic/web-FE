@@ -39,12 +39,13 @@ import { useHistory } from "react-router-dom";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
+  const [errEmail, setErrEmail] = useState("");
   const [nextStep, setStep] = useState(false);
   const history = useHistory();
 
   async function sendCode(email) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/sendmail_forget",
+      "https://web-be-brmc9.ondigitalocean.app/api/sendmailForget",
       { email: email }
     );
   }
@@ -57,10 +58,10 @@ const Forgot = () => {
       console.log(user.data.email);
       if (user.data.email === email) {
         setStep(true);
-        alert("Please check your email to receive a new password");
-        history.push("/auth/newpass");
+        alert("Please check your email to receive a new password")
       } else {
-        alert("Password reset failed");
+        if(user.data.email !== email)
+        setErrEmail("Email incorrect!");
       }
     } catch (error) {
       console.log(error);
@@ -86,8 +87,13 @@ const Forgot = () => {
             </CardHeader>
             <CardBody className="px-lg-5 py-lg-5">
               <div className="text-center text-muted mb-4">
-                <small>Enter your email to reset password!</small>
+                <small>Enter your valid email to reset password!</small>
               </div>
+              {errEmail != "" ? (
+                  <div className="error text-danger text-center">{errEmail}</div>
+                ) : (
+                  ""
+                )}
               <Form role="form">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">

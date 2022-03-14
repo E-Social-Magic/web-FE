@@ -59,26 +59,30 @@ const Login = () => {
     try {
       if (!username) {
         setErrName("You must enter username");
-      }else{
+      } else {
         setErrName("");
       }
-       
+
       if (!password) {
         setErrPass("You must enter password");
-      }else{
+      } else {
         setErrPass("");
       }
       const user = await loginUser({ username, password });
-      console.log(user.data);
-      console.log(user.headers);
+ 
 
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token);
-        console.log(user.data)
         history.push("/admin/index");
-
       } else {
-        setError("Username or password incorrect!");
+        console.log(user.data);
+        console.log(user.data.username);
+        console.log(username);
+        if (user.data.username !== username) {
+          setErrName("Username incorrect!");
+        } else{
+          setErrPass("You must enter password!");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -100,11 +104,11 @@ const Login = () => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-            {error != "" ? (
+            {/* {error != "" ? (
               <div className="error text-danger text-center">{error}</div>
             ) : (
               ""
-            )}
+            )} */}
 
             <Form role="form">
               <FormGroup className="mb-3">
