@@ -37,7 +37,7 @@ import axios from "axios";
 
 import { useHistory } from "react-router-dom";
 
-const NewPass = ({email}) => {
+const NewPass = ({ email }) => {
   const [code, setCode] = useState("");
   const [newPass, setNewPass] = useState("");
   const [error, setError] = useState("");
@@ -54,11 +54,11 @@ const NewPass = ({email}) => {
   const handleSubmit = async () => {
     if (!code) {
       setErrCode("You must enter code");
-    }else{
+    } else {
       setErrCode("");
     }
     try {
-      const user = await newPassWord({email, code, newPass, confirmPass });
+      const user = await newPassWord({ email, code, newPass, confirmPass });
       console.log(user.data.succes);
       if (user.data.success === true && newPass == confirmPass) {
         console.log(user.data);
@@ -66,9 +66,9 @@ const NewPass = ({email}) => {
         history.push("/admin/index");
         //chuyen qua dashboard kem theo duw lieuu
       } else {
-          if(newPass !== confirmPass){
-            setError("New password and confirm password are not the same")
-          }
+        if (newPass !== confirmPass) {
+          setError("New password and confirm password are not the same");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -90,21 +90,18 @@ const NewPass = ({email}) => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-            <div className="text-center text-muted mb-4">
-              <small>Enter your email to reset password!</small>
-            </div>
             <Form role="form">
-            {error != "" ? (
-              <div className="error text-danger text-center">{error}</div>
-            ) : (
-              ""
-            )}
-            <FormGroup className="mb-3">
-            {errCode != "" ? (
-              <div className="error text-danger text-center">{errCode}</div>
-            ) : (
-              ""
-            )}
+              {error != "" ? (
+                <div className="error text-danger text-center">{error}</div>
+              ) : (
+                ""
+              )}
+              <FormGroup className="mb-3">
+                {errCode != "" ? (
+                  <div className="error text-danger text-center">{errCode}</div>
+                ) : (
+                  ""
+                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -113,7 +110,7 @@ const NewPass = ({email}) => {
                   </InputGroupAddon>
                   <Input
                     placeholder="Code"
-                    type="password"
+                    type="number"
                     onChange={(e) => setCode(e.target.value)}
                     label="Code"
                     autoComplete="new-code"
