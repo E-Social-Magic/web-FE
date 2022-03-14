@@ -43,7 +43,6 @@ const cookies = new Cookies();
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [errName, setErrName] = useState("");
   const [errPass, setErrPass] = useState("");
   const history = useHistory();
@@ -61,28 +60,20 @@ const Login = () => {
         setErrName("You must enter username");
       } else {
         setErrName("");
-      }
+      };
 
       if (!password) {
         setErrPass("You must enter password");
       } else {
-        setErrPass("");
-      }
-      const user = await loginUser({ username, password });
- 
+        setErrPass("")
+      };
 
+      const user = await loginUser({ username, password })
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token);
         history.push("/admin/index");
       } else {
-        console.log(user.data);
-        console.log(user.data.username);
-        console.log(username);
-        if (user.data.username !== username) {
-          setErrName("Username incorrect!");
-        } else{
-          setErrPass("You must enter password!");
-        }
+        setErrName("Username or password incorrect!");
       }
     } catch (error) {
       console.log(error);
@@ -104,12 +95,6 @@ const Login = () => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-            {/* {error != "" ? (
-              <div className="error text-danger text-center">{error}</div>
-            ) : (
-              ""
-            )} */}
-
             <Form role="form">
               <FormGroup className="mb-3">
                 {errName != "" ? (
