@@ -94,6 +94,7 @@ const Users = () => {
                       <td>{item.username}</td>
                       <td>{item.email}</td>
                       <td>{item.role}</td>
+                      <td>{item.vote}</td>
                       <td>{item.createdAt}</td>
                       <td>{item.updatedAt}</td>
                       <td className="text-right">
