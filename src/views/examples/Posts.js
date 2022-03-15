@@ -36,17 +36,37 @@ import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
+import ToggleButton from "react-toggle-button";
+import Cookies from "universal-cookie";
 
 const Posts = () => {
   const [data, setData] = useState({ posts: [] });
-
+  const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios(
-      "https://web-be-brmc9.ondigitalocean.app/api/posts"
+      "https://web-be-brmc9.ondigitalocean.app/api/posts/admin",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
     );
     setData(result.data);
     console.log(data.posts);
   }, []);
+
+  const onToggle = (id) => {
+    console.log(id);
+    axios.post(
+      "https://web-be-brmc9.ondigitalocean.app/api/post/" + id + "/block",
+      null,
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+  };
 
   return (
     <div>
@@ -68,6 +88,10 @@ const Posts = () => {
               >
                 <thead className="thead-dark">
                   <tr>
+                    <th scope="col">Visible</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Hide name</th>
                     <th scope="col">Title</th>
                     <th scope="col">Content</th>
                     <th scope="col">Images</th>
@@ -75,9 +99,8 @@ const Posts = () => {
                     <th scope="col">Votes</th>
                     <th scope="col">Voteups</th>
                     <th scope="col">Votedowns</th>
-                    <th scope="col">Comments</th>
-                    <th scope="col">Visible</th>
-               
+                    {/* <th scope="col">Comments</th> */}
+
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
                     <th scope="col">
@@ -87,77 +110,7 @@ const Posts = () => {
                 </thead>
                 <tbody>
                   {data.posts.map((item) => (
-                    <tr>
-                      <th scope="row" key={item.id}>
-                        <span className="mb-0 text-sm">{item.title}</span>
-                      </th>
-                      <td>{item.content}</td>
-                      <td>
-                        {item.images.map((ite) => (
-                          <p>
-                            <img
-                              src={ite}
-                              alt="E-social"
-                              border="0"
-                              width={"150px"}
-                            >
-                              {console.log(ite)}
-                            </img>
-                          </p>
-                        ))}
-                      </td>
-                      <td>
-                        {item.videos.map((ite) => (
-                          <p>
-                            <video controls width="150px">
-                              <source src={ite} border="0" />
-                            </video>
-                          </p>
-                        ))}
-                      </td>
-                      <td>{item.votes}</td>
-                      <td>{item.voteups}</td>
-                      <td>{item.votedowns}</td>
-                      <td>{item.comments}</td>
-                      <td>{item.visible}</td>
-                      
-                      <td>{item.createdAt}</td>
-                      <td>{item.updatedAt}</td>
-                      <td className="text-right">
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            <i className="fas fa-ellipsis-v" />
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Delete
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Something else here
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </td>
-                    </tr>
+                    <Render item={item} key={item.id} onToggle={onToggle} />
                   ))}
                 </tbody>
               </Table>
@@ -168,5 +121,87 @@ const Posts = () => {
     </div>
   );
 };
+
+function Render({ item, onToggle }) {
+  const [toggle, setToggle] = useState(item.blocked);
+  return (
+    <tr>
+      <th scope="row" key={item}>
+        <ToggleButton
+          value={toggle}
+          onClick={() => {
+            onToggle(item.id);
+            setToggle(!toggle);
+          }}
+        />
+        {toggle == false ? <span>Active</span> : <span>Block</span>}
+      </th>
+      <th scope="row" >
+        <span className="mb-0 text-sm">{item.username}</span>
+      </th>
+      <td>
+        {item.private == false ? <span>Public</span> : <span>Private</span>}
+      </td>
+      <td>
+        {item.private == false ? <span>No</span> : <span>Yes</span>}
+      </td>
+      <th scope="row" >
+        <span className="mb-0 text-sm">{item.title}</span>
+      </th>
+
+      <td>{item.content}</td>
+      <td>
+        {item.images.map((ite) => (
+          <p>
+            <img src={ite} alt="E-social" border="0" width={"150px"}>
+              {console.log(ite)}
+            </img>
+          </p>
+        ))}
+      </td>
+      <td>
+        {item.videos.map((ite) => (
+          <p>
+            <video controls width="150px">
+              <source src={ite} border="0" />
+            </video>
+          </p>
+        ))}
+      </td>
+      <td>{item.votes}</td>
+      <td>{item.voteups}</td>
+      <td>{item.votedowns}</td>
+      {/* <td>{item.comments}</td> */}
+
+      <td>{item.createdAt}</td>
+      <td>{item.updatedAt}</td>
+      <td className="text-right">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            className="btn-icon-only text-light"
+            href="#pablo"
+            role="button"
+            size="sm"
+            color=""
+            onClick={(e) => e.preventDefault()}
+          >
+            <i className="fas fa-ellipsis-v" />
+          </DropdownToggle>
+          <DropdownMenu className="dropdown-menu-arrow" right>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Delete
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Another action
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Something else here
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </td>
+    </tr>
+  );
+}
 
 export default Posts;

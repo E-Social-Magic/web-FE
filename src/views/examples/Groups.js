@@ -36,13 +36,11 @@ import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
-import Cookies from 'js-cookie'
-
-export const getAccessToken = () => Cookies.get('access_token')
-export const getRefreshToken = () => Cookies.get('refresh_token')
-export const isAuthenticated = () => !!getAccessToken()
+import Cookies from "universal-cookie";
+import ToggleButton from "react-toggle-button";
 
 const Groups = () => {
+  const cookies = new Cookies();
   const [data, setData] = useState({ groups: [] });
 
   useEffect(async () => {
@@ -53,8 +51,17 @@ const Groups = () => {
     console.log(data.groups);
   }, []);
 
-  const onDelete = (id) => {
-    axios.delete(`https://web-be-brmc9.ondigitalocean.app/api/posts${id}`);
+  const onToggle = (id) => {
+    console.log(id);
+    return axios.post(
+      "https://web-be-brmc9.ondigitalocean.app/api/group/" + id + "/block",
+      null,
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
   };
 
   return (
@@ -77,10 +84,11 @@ const Groups = () => {
               >
                 <thead className="thead-dark">
                   <tr>
+                    <th scope="col">Visible</th>
                     <th scope="col">Group Name</th>
                     <th scope="col">Subject</th>
                     <th scope="col">Avatar</th>
-                    <th scope="col">Visible</th>
+                    <th scope="col">Action</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
                     <th scope="col" />
@@ -88,59 +96,7 @@ const Groups = () => {
                 </thead>
                 <tbody>
                   {data.groups.map((item) => (
-                    <tr>
-                      <th scope="row" key={item.id}>
-                        <span className="mb-0 text-sm">{item.group_name}</span>
-                      </th>
-                      <td>{item.subject}</td>
-                      <td>
-                        <img
-                src={item.avatar}
-                alt="E-Social"
-                border="0"
-                width={"150px"}
-              ></img>
-                
-            
-              </td>
-                      <td>{item.visible}</td>
-                      <td>{item.createdAt}</td>
-                      <td>{item.updatedAt}</td>
-                      <td className="text-right">
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            <i className="fas fa-ellipsis-v" />
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={() => onDelete(data.id)}
-                            >
-                              Delete
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Something else here
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </td>
-                    </tr>
+                    <Render item={item} key={item.id} onToggle={onToggle} />
                   ))}
                 </tbody>
               </Table>
@@ -151,5 +107,69 @@ const Groups = () => {
     </div>
   );
 };
+
+function Render({ item, onToggle }) {
+  const [toggle, setToggle] = useState(item.blocked);
+  return (
+    <tr>
+      <th>
+        <ToggleButton
+          value={toggle}
+          onClick={() => {
+            onToggle(item.id);
+            setToggle(!toggle);
+          }}
+          // onToggle={(item.id) => {
+          //   setState({
+          //     value: !value,
+          //   });
+          // }}
+        />
+        {toggle == false ? <span>Active</span> : <span>Block</span>}
+      </th>
+      <th scope="row" key={item}>
+        <span className="mb-0 text-sm">{item.group_name}</span>
+      </th>
+      <td>{item.subject}</td>
+      <td>
+        <a
+          className="avatar rounded-circle mr-3"
+          href="#pablo"
+          onClick={(e) => e.preventDefault()}
+        >
+          <img alt="..." src={item.avatar} />
+        </a>
+      </td>
+      <td>{item.visible}</td>
+      <td>{item.createdAt}</td>
+      <td>{item.updatedAt}</td>
+      <td className="text-right">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            className="btn-icon-only text-light"
+            href="#pablo"
+            role="button"
+            size="sm"
+            color=""
+            onClick={(e) => e.preventDefault()}
+          >
+            <i className="fas fa-ellipsis-v" />
+          </DropdownToggle>
+          <DropdownMenu className="dropdown-menu-arrow" right>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Delete
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Another action
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Something else here
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </td>
+    </tr>
+  );
+}
 
 export default Groups;

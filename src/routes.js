@@ -17,15 +17,14 @@
 */
 import Index from "views/Index.js";
 import Login from "views/examples/Login.js";
-import Forgot from "views/examples/Forgot.js"
-import NewPass from "views/examples/NewPass.js"
-import Tables from "views/examples/Tables.js";
-import Users from "views/examples/Users.js"
+import Profile from "views/examples/Profile.js";
+import Forgot from "views/examples/Forgot.js";
+import NewPass from "views/examples/NewPass.js";
+import Users from "views/examples/Users.js";
 import Posts from "views/examples/Posts.js";
-import Videos from "views/examples/Videos.js"
-import Coins from "views/examples/Coins.js"
+import Coins from "views/examples/Coins.js";
 import Groups from "views/examples/Groups.js";
-import Comments from "views/examples/Comments.js";
+import EditUser from "views/examples/EditUser.js";
 
 var routes = [
   {
@@ -71,6 +70,13 @@ var routes = [
   //   layout: "/admin",
   // },
   {
+    path: "/user-profile",
+    name: "User Profile",
+    icon: "ni ni-single-02 text-yellow",
+    component: Profile,
+    layout: "/admin",
+  },
+  {
     path: "/login",
     name: "Login",
     icon: "ni ni-key-25 text-info",
@@ -90,6 +96,13 @@ var routes = [
     icon: "ni ni-key-25 text-info",
     component: NewPass,
     layout: "/auth",
-  }
+  },
+  {
+    path: "/user/:idUser/block",
+    exact: true,
+    name: "EditUser",
+    component: ({ match }) => <EditUser match={match} />,
+    layout: "/admin",
+  },
 ];
 export default routes;

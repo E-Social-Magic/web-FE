@@ -73,7 +73,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       return (
         <>
-        {(prop.layout !=="/auth")?
+        {(prop.layout !=="/auth" && prop.path !== "/user/:idUser/block" )?
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}
@@ -84,7 +84,9 @@ const Sidebar = (props) => {
             <i className={prop.icon} />
             {prop.name}
           </NavLink>
-        </NavItem>:""}</>
+        </NavItem>
+         :""}
+        </>
       );
     });
   };

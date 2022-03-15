@@ -41,7 +41,7 @@ import { useHistory } from "react-router-dom";
 // import Admin from "layouts/Admin";
 const cookies = new Cookies();
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
   const [password, setPassword] = useState("");
   const [errName, setErrName] = useState("");
   const [errPass, setErrPass] = useState("");
@@ -56,8 +56,8 @@ const Login = () => {
   const handleSubmit = async (e) => {
     // e.preventDefault();
     try {
-      if (!username) {
-        setErrName("You must enter username");
+      if (!email) {
+        setErrName("You must enter email");
       } else {
         setErrName("");
       };
@@ -68,12 +68,12 @@ const Login = () => {
         setErrPass("")
       };
 
-      const user = await loginUser({ username, password })
+      const user = await loginUser({ email, password })
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token);
         history.push("/admin/index");
       } else {
-        setErrName("Username or password incorrect!");
+        setErrName("email or password incorrect!");
       }
     } catch (error) {
       console.log(error);
@@ -109,10 +109,10 @@ const Login = () => {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
-                    placeholder="Username"
-                    type="username"
-                    onChange={(e) => setUsername(e.target.value)}
-                    label="Username"
+                    placeholder="Email"
+                    type="email"
+                    onChange={(e) => setemail(e.target.value)}
+                    label="email"
                     autoComplete="new-email"
                   />
                 </InputGroup>

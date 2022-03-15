@@ -24,36 +24,49 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Media,
-  Progress,
   Table,
   Container,
   Row,
-  UncontrolledTooltip,
+  Media,
 } from "reactstrap";
-// core components
+
+import { Link } from "react-router-dom";
 import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
-import Cookies from 'universal-cookie';
-const cookies = new Cookies();
+import Cookies from "universal-cookie";
+import ToggleButton from "react-toggle-button";
 
 const Users = () => {
   const [data, setData] = useState({ users: [] });
 
+  const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios(
       "https://web-be-brmc9.ondigitalocean.app/api/users",
       {
-        headers:{
-          "Authorization":"Bearer " + cookies.get('token')
-        }
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
       }
     );
     console.log(result.data.users);
     setData(result.data);
   }, []);
+
+  const onToggle = (id) => {
+    console.log(id);
+    return axios.post(
+      "https://web-be-brmc9.ondigitalocean.app/api/user/" + id + "/block",
+      null,
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+  };
 
   return (
     <div>
@@ -76,60 +89,20 @@ const Users = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th scope="col">Visible</th>
+                    <th scope="col">Avatar</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
-                    <th scope="col" ><i className="ni ni-settings-gear-65"></i></th>
+                    <th scope="col">
+                      <i className="ni ni-settings-gear-65"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.users.map((item) => (
-                    <tr>
-                      <th scope="row" key={item.id}>
-                        <span className="mb-0 text-sm">{item.visible}</span>
-                      </th>
-                      <td>{item.username}</td>
-                      <td>{item.email}</td>
-                      <td>{item.role}</td>
-                      <td>{item.createdAt}</td>
-                      <td>{item.updatedAt}</td>
-                      <td className="text-right">
-                        <UncontrolledDropdown>
-                          <DropdownToggle
-                            className="btn-icon-only text-light"
-                            href="#pablo"
-                            role="button"
-                            size="sm"
-                            color=""
-                            onClick={(e) => e.preventDefault()}
-                          >
-                            <i className="fas fa-ellipsis-v" />
-                          </DropdownToggle>
-                          <DropdownMenu className="dropdown-menu-arrow" right>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Delete
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Another action
-                            </DropdownItem>
-                            <DropdownItem
-                              href="#pablo"
-                              onClick={(e) => e.preventDefault()}
-                            >
-                              Something else here
-                            </DropdownItem>
-                          </DropdownMenu>
-                        </UncontrolledDropdown>
-                      </td>
-                    </tr>
+                    <Render item={item} key={item.id} onToggle={onToggle} />
                   ))}
                 </tbody>
               </Table>
@@ -140,5 +113,76 @@ const Users = () => {
     </div>
   );
 };
+
+function Render({ item, onToggle }) {
+  const [toggle, setToggle] = useState(item.blocked);
+  return (
+    <tr>
+      <th scope="row" key={item}>
+        <ToggleButton
+          value={toggle}
+          onClick={() => {
+            onToggle(item.id);
+            setToggle(!toggle);
+          }}
+          // onToggle={(item.id) => {
+          //   setState({
+          //     value: !value,
+          //   });
+          // }}
+        />
+        {toggle == false ? <span>Active</span> : <span>Block</span>}
+      </th>
+      <th scope="row">
+   
+          <a
+            className="avatar rounded-circle mr-3"
+            href="#pablo"
+            onClick={(e) => e.preventDefault()}
+          >
+            <img alt="..." src={item.avatar} />
+          </a>
+       
+      </th>
+      <td>{item.username}</td>
+      <td>{item.email}</td>
+      <td>{item.role}</td>
+      <td>{item.createdAt}</td>
+      <td>{item.updatedAt}</td>
+      <td className="text-right">
+        <UncontrolledDropdown>
+          <DropdownToggle
+            className="btn-icon-only text-light"
+            href="#pablo"
+            role="button"
+            size="sm"
+            color=""
+            onClick={(e) => e.preventDefault()}
+          >
+            <i className="fas fa-ellipsis-v" />
+          </DropdownToggle>
+          <DropdownMenu className="dropdown-menu-arrow" right>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <Link to="/#" className="edit-link">
+                <i className="fas fa-eye" /> View detail
+              </Link>
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              <Link
+                to={"/admin/user/" + item.id + "/block"}
+                className="edit-link"
+              >
+                <i className="fas fa-edit" /> Edit
+              </Link>
+            </DropdownItem>
+            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+              Something else here
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown>
+      </td>
+    </tr>
+  );
+}
 
 export default Users;
