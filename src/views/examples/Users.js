@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// reactstrap components
 import {
   Badge,
   Card,
@@ -163,18 +146,18 @@ function Render({ item, onToggle }) {
           </DropdownToggle>
           <DropdownMenu className="dropdown-menu-arrow" right>
             <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
-              <Link to="/#" className="edit-link">
+              <Link to={"/admin/user/" + item.id + "/info"} className="edit-link">
                 <i className="fas fa-eye" /> View detail
               </Link>
             </DropdownItem>
-            <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+            {/* <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
               <Link
-                to={"/admin/user/" + item.id + "/block"}
+                to={"/admin/user/" + item.id + "/info"}
                 className="edit-link"
               >
                 <i className="fas fa-edit" /> Edit
               </Link>
-            </DropdownItem>
+            </DropdownItem> */}
             <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
               Something else here
             </DropdownItem>

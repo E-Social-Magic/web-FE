@@ -85,13 +85,15 @@ const Groups = () => {
                 <thead className="thead-dark">
                   <tr>
                     <th scope="col">Visible</th>
-                    <th scope="col">Group Name</th>
-                    <th scope="col">Subject</th>
                     <th scope="col">Avatar</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Group Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Subject</th>
                     <th scope="col">Create at</th>
                     <th scope="col">Update at</th>
-                    <th scope="col" />
+                    <th scope="col">
+                      <i className="ni ni-settings-gear-65"></i>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -127,10 +129,6 @@ function Render({ item, onToggle }) {
         />
         {toggle == false ? <span>Active</span> : <span>Block</span>}
       </th>
-      <th scope="row" key={item}>
-        <span className="mb-0 text-sm">{item.group_name}</span>
-      </th>
-      <td>{item.subject}</td>
       <td>
         <a
           className="avatar rounded-circle mr-3"
@@ -140,7 +138,13 @@ function Render({ item, onToggle }) {
           <img alt="..." src={item.avatar} />
         </a>
       </td>
-      <td>{item.visible}</td>
+      <th scope="row" key={item}>
+        <span className="mb-0 text-sm">{item.group_name}</span>
+      </th>
+      <td>
+        {item.private == false ? <span>Public</span> : <span>Private</span>}
+      </td>
+      <td>{item.subject}</td>
       <td>{item.createdAt}</td>
       <td>{item.updatedAt}</td>
       <td className="text-right">

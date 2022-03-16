@@ -1,133 +1,333 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// reactstrap components
 import {
-  Badge,
+  Button,
   Card,
   CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Table,
+  CardBody,
+  FormGroup,
+  Form,
+  Input,
   Container,
+  Col,
   Row,
 } from "reactstrap";
 
-import { Link } from "react-router-dom";
+// core components
+import UserHeader from "components/Headers/UserHeader.js";
+
 import { useHistory, useParams } from "react-router-dom";
-import Header from "components/Headers/Header.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
-const cookies = new Cookies();
+import ToggleButton from "react-toggle-button";
 
-const EditUser = ({match}) => {
+const EditUser = ({ match }) => {
+  const cookies = new Cookies();
+
   const [data, setData] = useState({ user: [] });
 
   useEffect(async () => {
-    console.log(match.params)
-    const  {idUser}  = match.params;
+    console.log(match.params);
+    const { idUser } = match.params;
     const result = await axios.get(
-      'https://web-be-brmc9.ondigitalocean.app/api/user/' + idUser + '/info',
+      "https://web-be-brmc9.ondigitalocean.app/api/user/" + idUser + "/info",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
         },
-      },
-  
+      }
     );
-    console.log(result.data.user)
+    console.log(result.data.user);
     setData(result.data);
   }, []);
 
+  // const onToggle = (id) => {
+  //   console.log(id);
+  //   return axios.post(
+  //     "https://web-be-brmc9.ondigitalocean.app/api/user/" + id + "/block",
+  //     null,
+  //     {
+  //       headers: {
+  //         Authorization: "Bearer " + cookies.get("token"),
+  //       },
+  //     }
+  //   );
+  // };
+
   return (
-    <div>
-      <Header />
+    <>
+      <UserHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
-        {/* Table */}
-
-        {/* Dark table */}
-        <Row className="mt-5">
-          <div className="col">
-            <Card className="bg-default shadow">
-              <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">View detail</h3>
+        <Row>
+          <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
+            <Card className="card-profile shadow">
+              <Row className="justify-content-center">
+                <Col className="order-lg-2" lg="3">
+                  <div className="card-profile-image">
+                    <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                      <img
+                        alt="..."
+                        className="rounded-circle"
+                        src={data.user.avatar}
+                      />
+                    </a>
+                  </div>
+                </Col>
+              </Row>
+              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                <div className="d-flex justify-content-between">
+                  <Button
+                    className="mr-4"
+                    color="info"
+                    href="#pablo"
+                    onClick={(e) => e.preventDefault()}
+                    size="sm"
+                  >
+                    Connect
+                  </Button>
+                  <Button
+                    className="float-right"
+                    color="default"
+                    href="#pablo"
+                    onClick={(e) => e.preventDefault()}
+                    size="sm"
+                  >
+                    Message
+                  </Button>
+                </div>
               </CardHeader>
-              <Table
-                className="align-items-center table-light table-flush " style={{margin:"20px",  width: "95%"}}
-                responsive
-              >
-                <div style={{margin:"20px", padding: "100px", width: "500px", display:"center"}}>
-                <div className="form-group">
-                  <label htmlFor="time" className="text-body">
-                    Name :
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-body"
-                    name="_time"
-                    value={data.user.username }
-                    required
-                  />
+              <CardBody className="pt-0 pt-md-4">
+                <Row>
+                  <div className="col">
+                    <div className="card-profile-stats d-flex justify-content-center mt-md-5">
+                      <div>
+                        <span className="heading">22</span>
+                        <span className="description">Friends</span>
+                      </div>
+                      <div>
+                        <span className="heading">10</span>
+                        <span className="description">Photos</span>
+                      </div>
+                      <div>
+                        <span className="heading">89</span>
+                        <span className="description">Comments</span>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+                <div className="text-center">
+                  <h3>
+                    {data.user.username}
+                    <span className="font-weight-light">, 27</span>
+                  </h3>
+                  <div className="h5 font-weight-300">
+                    <i className="ni location_pin mr-2" />
+                    Bucharest, Romania
+                  </div>
+                  <div className="h5 mt-4">
+                    <i className="ni business_briefcase-24 mr-2" />
+                    Solution Manager - Creative Tim Officer
+                  </div>
+                  <div>
+                    <i className="ni education_hat mr-2" />
+                    University of Computer Science
+                  </div>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="title" className="text-body">
-                    Email :{" "}
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-body"
-                    name="title"
-                    value={data.user.email}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="title" className="text-body">
-                    Role :{" "}
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-body"
-                    name="title"
-                    value={data.user.role}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="title" className="text-body">
-                    Update at :{" "}
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control text-body"
-                    name="title"
-                    value={data.user.updatedAt}
-                  />
-                </div>
-                </div>
-              </Table>
+              </CardBody>
             </Card>
-          </div>
+          </Col>
+          <Col className="order-xl-1" xl="8">
+            <Card className="bg-secondary shadow">
+              <CardHeader className="bg-white border-0">
+                <Row className="align-items-center">
+                  <Col xs="8">
+                    <h3 className="mb-0">Detail User</h3>
+                  </Col>
+                  <Col className="text-right" xs="4">
+                    <Button
+                      color="primary"
+                      href="#pablo"
+                      onClick={(e) => e.preventDefault()}
+                      size="sm"
+                    >
+                      Settings
+                    </Button>
+                  </Col>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                <Form>
+                  <h6 className="heading-small text-muted mb-4">
+                    User information
+                  </h6>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Email
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.email}
+                            id="input-first-name"
+                            placeholder="First name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            User name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.username}
+                            id="input-last-name"
+                            placeholder="Last name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  {/* Address */}
+
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-city"
+                          >
+                            Role
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            value={data.user.role}
+                            id="input-city"
+                            placeholder="City"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Coins
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            value={data.user.coins}
+                            id="input-country"
+                            placeholder="Country"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-country"
+                          >
+                            Postal code
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-postal-code"
+                            placeholder="Postal code"
+                            type="number"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  <div className="pl-lg-4">
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            created at
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.createdAt}
+                            id="input-first-name"
+                            placeholder="First name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Update at
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.updatedAt}
+                            id="input-last-name"
+                            placeholder="Last name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div>
+                  {/* <div className="pl-lg-4">
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Block
+                          </label>
+                          <th scope="row" >
+                            <ToggleButton
+                              value={toggle}
+                              onClick={() => {
+                                onToggle(data.user.id);
+                                setToggle(!toggle);
+                              }}
+                            />
+                            {toggle == false ? (
+                              <span>Active</span>
+                            ) : (
+                              <span>Block</span>
+                            )}
+                          </th>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                  </div> */}
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
         </Row>
       </Container>
-    </div>
+    </>
   );
 };
 

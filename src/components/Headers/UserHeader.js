@@ -1,25 +1,24 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
+import Cookies from "universal-cookie";
 const UserHeader = () => {
+  const cookies = new Cookies();
+  const [data, setData] = useState({ user: [] });
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://web-be-brmc9.ondigitalocean.app/api/user/info",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+    console.log(result.data.user);
+    setData(result.data);
+  }, []);
   return (
     <>
       <div
@@ -40,7 +39,7 @@ const UserHeader = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Hello {data.user.username}</h1>
               <p className="text-white mt-0 mb-5">
                 This is your profile page. You can see the progress you've made
                 with your work and manage your projects or assigned tasks

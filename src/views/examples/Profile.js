@@ -1,22 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import {
   Button,
   Card,
@@ -31,11 +13,30 @@ import {
 } from "reactstrap";
 // core components
 import UserHeader from "components/Headers/UserHeader.js";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import React from "react";
+import Cookies from "universal-cookie";
 
 const Profile = () => {
+  const cookies = new Cookies();
+  const [data, setData] = useState({ user: [] });
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://web-be-brmc9.ondigitalocean.app/api/user/info",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+    console.log(result.data.user);
+    setData(result.data);
+  }, []);
+
   return (
     <>
-      <UserHeader />
+        <UserHeader />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -48,9 +49,7 @@ const Profile = () => {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={
-                          require("../../assets/img/theme/team-4-800x800.jpg")
-                            .default
+                        src={data.user.avatar
                         }
                       />
                     </a>
@@ -100,7 +99,7 @@ const Profile = () => {
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
+                    {data.user.username}
                     <span className="font-weight-light">, 27</span>
                   </h3>
                   <div className="h5 font-weight-300">
@@ -115,15 +114,6 @@ const Profile = () => {
                     <i className="ni education_hat mr-2" />
                     University of Computer Science
                   </div>
-                  <hr className="my-4" />
-                  <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
-                  </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    Show more
-                  </a>
                 </div>
               </CardBody>
             </Card>
@@ -133,7 +123,7 @@ const Profile = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">My account</h3>
+                    <h3 className="mb-0">Detail User</h3>
                   </Col>
                   <Col className="text-right" xs="4">
                     <Button
@@ -158,48 +148,13 @@ const Profile = () => {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Username
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="lucky.jesse"
-                            id="input-username"
-                            placeholder="Username"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-email"
-                          >
-                            Email address
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-email"
-                            placeholder="jesse@example.com"
-                            type="email"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            First name
+                            Email
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Lucky"
+                            Value={data.user.email}
                             id="input-first-name"
                             placeholder="First name"
                             type="text"
@@ -212,11 +167,11 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-last-name"
                           >
-                            Last name
+                            User name
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
+                            Value={data.user.username}
                             id="input-last-name"
                             placeholder="Last name"
                             type="text"
@@ -225,31 +180,9 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
-                  <hr className="my-4" />
                   {/* Address */}
-                  <h6 className="heading-small text-muted mb-4">
-                    Contact information
-                  </h6>
+
                   <div className="pl-lg-4">
-                    <Row>
-                      <Col md="12">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-address"
-                          >
-                            Address
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            id="input-address"
-                            placeholder="Home Address"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
                     <Row>
                       <Col lg="4">
                         <FormGroup>
@@ -257,11 +190,11 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-city"
                           >
-                            City
+                            Role
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
+                            value={data.user.role}
                             id="input-city"
                             placeholder="City"
                             type="text"
@@ -274,11 +207,11 @@ const Profile = () => {
                             className="form-control-label"
                             htmlFor="input-country"
                           >
-                            Country
+                            Coins
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="United States"
+                            value={data.user.coins}
                             id="input-country"
                             placeholder="Country"
                             type="text"
@@ -303,21 +236,42 @@ const Profile = () => {
                       </Col>
                     </Row>
                   </div>
-                  <hr className="my-4" />
-                  {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
                   <div className="pl-lg-4">
-                    <FormGroup>
-                      <label>About Me</label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="A few words about you ..."
-                        rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
-                        type="textarea"
-                      />
-                    </FormGroup>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            created at
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value ={data.user.createdAt}
+                            id="input-first-name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Update at
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.updatedAt}
+                            id="input-last-name"
+                            placeholder="Last name"
+                            type="text"
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
                   </div>
                 </Form>
               </CardBody>
