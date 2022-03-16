@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-// reactstrap components
 import { useState } from "react";
 import {
   Button,
@@ -66,10 +47,14 @@ const NewPass = ({ email }) => {
     try {
       const user = await newPassWord({ email, code, newPass, confirmPass });
       console.log(user.data.succes);
-      if (user.data.success === true && newPass === confirmPass && newPass !== "" ) {
+      if (
+        user.data.success === true &&
+        newPass === confirmPass &&
+        newPass !== ""
+      ) {
         console.log(user.data);
-        alert("Logged in successfully!")
-        history.push("/admin/index")
+        alert("Logged in successfully!");
+        history.push("/admin/index");
       } else {
         if (newPass !== confirmPass) {
           setError("New password and confirm password are not the same");
@@ -97,13 +82,23 @@ const NewPass = ({ email }) => {
           <CardBody className="px-lg-5 py-lg-5">
             <Form role="form">
               {error != "" ? (
-                <div className="error text-danger text-center">{error}</div>
+                <div
+                  style={{ fontFamily: "roboto" }}
+                  className="error text-danger text-center"
+                >
+                  {error}
+                </div>
               ) : (
                 ""
               )}
               <FormGroup className="mb-3">
                 {errCode != "" ? (
-                  <div className="error text-danger text-center">{errCode}</div>
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errCode}
+                  </div>
                 ) : (
                   ""
                 )}
@@ -123,8 +118,13 @@ const NewPass = ({ email }) => {
                 </InputGroup>
               </FormGroup>
               <FormGroup>
-              {errPass != "" ? (
-                  <div className="error text-danger text-center">{errPass}</div>
+                {errPass != "" ? (
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errPass}
+                  </div>
                 ) : (
                   ""
                 )}
