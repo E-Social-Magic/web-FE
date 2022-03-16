@@ -255,44 +255,6 @@ const EditUser = ({ match }) => {
                       </Col>
                     </Row>
                   </div>
-                  <div className="pl-lg-4">
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            created at
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            Value={data.user.createdAt}
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-last-name"
-                          >
-                            Update at
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            Value={data.user.updatedAt}
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </div>
                   {/* <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">

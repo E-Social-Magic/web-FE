@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// reactstrap components
 import {
   Badge,
   Card,
@@ -80,7 +63,7 @@ const Posts = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Card tables</h3>
+                <h3 className="text-white mb-0">Posts</h3>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -97,12 +80,6 @@ const Posts = () => {
                     <th scope="col">Images</th>
                     <th scope="col">Videos</th>
                     <th scope="col">Votes</th>
-                    <th scope="col">Voteups</th>
-                    <th scope="col">Votedowns</th>
-                    {/* <th scope="col">Comments</th> */}
-
-                    <th scope="col">Create at</th>
-                    <th scope="col">Update at</th>
                     <th scope="col">
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
@@ -169,12 +146,6 @@ function Render({ item, onToggle }) {
         ))}
       </td>
       <td>{item.votes}</td>
-      <td>{item.voteups}</td>
-      <td>{item.votedowns}</td>
-      {/* <td>{item.comments}</td> */}
-
-      <td>{item.createdAt}</td>
-      <td>{item.updatedAt}</td>
       <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle

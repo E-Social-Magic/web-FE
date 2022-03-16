@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Argon Dashboard React - v1.2.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-// reactstrap components
 import {
   Badge,
   Card,
@@ -76,7 +59,7 @@ const Groups = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Card tables</h3>
+                <h3 className="text-white mb-0">Groups</h3>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -89,8 +72,6 @@ const Groups = () => {
                     <th scope="col">Group Name</th>
                     <th scope="col">Status</th>
                     <th scope="col">Subject</th>
-                    <th scope="col">Create at</th>
-                    <th scope="col">Update at</th>
                     <th scope="col">
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
@@ -145,8 +126,6 @@ function Render({ item, onToggle }) {
         {item.private == false ? <span>Public</span> : <span>Private</span>}
       </td>
       <td>{item.subject}</td>
-      <td>{item.createdAt}</td>
-      <td>{item.updatedAt}</td>
       <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle

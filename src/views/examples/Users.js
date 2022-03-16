@@ -76,8 +76,6 @@ const Users = () => {
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
-                    <th scope="col">Create at</th>
-                    <th scope="col">Update at</th>
                     <th scope="col">
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
@@ -130,8 +128,6 @@ function Render({ item, onToggle }) {
       <td>{item.username}</td>
       <td>{item.email}</td>
       <td>{item.role}</td>
-      <td>{item.createdAt}</td>
-      <td>{item.updatedAt}</td>
       <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle
