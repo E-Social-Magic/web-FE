@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   Button,
@@ -42,15 +41,15 @@ const Login = () => {
         setErrName("You must enter email");
       } else {
         setErrName("");
-      };
+      }
 
       if (!password) {
         setErrPass("You must enter password");
       } else {
-        setErrPass("")
-      };
+        setErrPass("");
+      }
 
-      const user = await loginUser({ email, password })
+      const user = await loginUser({ email, password });
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token);
         history.push("/admin/index");
@@ -79,17 +78,13 @@ const Login = () => {
           <CardBody className="px-lg-5 py-lg-5">
             <Form role="form">
               <FormGroup className="mb-3">
-                {errName != "" ? (
-                  <div style={{fontFamily: 'roboto'}} className="error text-danger text-center">{errName}</div>
-                ) : (
-                  ""
-                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
                       <i className="ni ni-email-83" />
                     </InputGroupText>
                   </InputGroupAddon>
+
                   <Input
                     placeholder="Email"
                     type="email"
@@ -98,13 +93,18 @@ const Login = () => {
                     autoComplete="new-email"
                   />
                 </InputGroup>
-              </FormGroup>
-              <FormGroup>
-                {errPass != "" ? (
-                  <div style={{fontFamily: 'roboto'}} className="error text-danger text-center">{errPass}</div>
+                {errName != "" ? (
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errName}
+                  </div>
                 ) : (
                   ""
                 )}
+              </FormGroup>
+              <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -118,6 +118,16 @@ const Login = () => {
                     autoComplete="new-password"
                   />
                 </InputGroup>
+                {errPass != "" ? (
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errPass}
+                  </div>
+                ) : (
+                  ""
+                )}
               </FormGroup>
               <div className="custom-control custom-control-alternative custom-checkbox">
                 <input

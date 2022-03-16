@@ -40,7 +40,7 @@ const Forgot = () => {
       console.log(user.data.email);
       if (user.data.email === email) {
         setStep(true);
-        alert("Please check your email to receive a new password")
+        alert("Please check your email to receive a new password.")
       } else {
         if(user.data.email !== email)
         setErrEmail("Email incorrect!");
@@ -71,11 +71,7 @@ const Forgot = () => {
               <div className="text-center text-muted mb-4">
                 <small>Enter your valid email to reset password!</small>
               </div>
-              {errEmail != "" ? (
-                  <div style={{fontFamily: 'roboto'}} className="error text-danger text-center">{errEmail}</div>
-                ) : (
-                  ""
-                )}
+        
               <Form role="form">
                 <FormGroup className="mb-3">
                   <InputGroup className="input-group-alternative">
@@ -92,6 +88,11 @@ const Forgot = () => {
                       autoComplete="new-email"
                     />
                   </InputGroup>
+                  {errEmail != "" ? (
+                  <div style={{fontFamily: 'roboto'}} className="error text-danger text-center">{errEmail}</div>
+                ) : (
+                  ""
+                )}
                 </FormGroup>
                 <div className="text-center">
                   <Button

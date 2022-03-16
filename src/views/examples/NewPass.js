@@ -35,12 +35,12 @@ const NewPass = ({ email }) => {
   }
   const handleSubmit = async () => {
     if (!code) {
-      setErrCode("You must enter code");
+      setErrCode("You must enter code.");
     } else {
       setErrCode("");
     }
     if (!newPass) {
-      setErrPass("You must enter new password");
+      setErrPass("You must enter new password.");
     } else {
       setErrPass("");
     }
@@ -57,7 +57,7 @@ const NewPass = ({ email }) => {
         history.push("/admin/index");
       } else {
         if (newPass !== confirmPass) {
-          setError("New password and confirm password are not the same");
+          setError("New password and confirm password are not the same.");
         }
       }
     } catch (error) {
@@ -80,17 +80,7 @@ const NewPass = ({ email }) => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-            <Form role="form">
-              {error != "" ? (
-                <div
-                  style={{ fontFamily: "roboto" }}
-                  className="error text-danger text-center"
-                >
-                  {error}
-                </div>
-              ) : (
-                ""
-              )}
+            <Form role="form">  
               <FormGroup className="mb-3">
                 {errCode != "" ? (
                   <div
@@ -116,18 +106,18 @@ const NewPass = ({ email }) => {
                     autoComplete="new-code"
                   />
                 </InputGroup>
+                {error != "" ? (
+                <div
+                  style={{ fontFamily: "roboto" }}
+                  className="error text-danger text-center"
+                >
+                  {error}
+                </div>
+              ) : (
+                ""
+              )}
               </FormGroup>
               <FormGroup>
-                {errPass != "" ? (
-                  <div
-                    style={{ fontFamily: "roboto" }}
-                    className="error text-danger text-center"
-                  >
-                    {errPass}
-                  </div>
-                ) : (
-                  ""
-                )}
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -141,6 +131,16 @@ const NewPass = ({ email }) => {
                     autoComplete="new-password"
                   />
                 </InputGroup>
+                {errPass != "" ? (
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errPass}
+                  </div>
+                ) : (
+                  ""
+                )}
               </FormGroup>
               <FormGroup>
                 <InputGroup className="input-group-alternative">
