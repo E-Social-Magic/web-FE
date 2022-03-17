@@ -43,7 +43,7 @@ const Forgot = () => {
         alert("Please check your email to receive a new password.")
       } else {
         if(user.data.email !== email)
-        setErrEmail("Email incorrect!");
+        setErrEmail("Please enter email!");
       }
     } catch (error) {
       console.log(error);

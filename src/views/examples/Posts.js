@@ -71,16 +71,16 @@ const Posts = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">Visible</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Hide name</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Content</th>
-                    <th scope="col">Images</th>
-                    <th scope="col">Videos</th>
-                    <th scope="col">Votes</th>
-                    <th scope="col">
+                    <th scope="col" style={{fontSize: '13px'}}>Visible</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Username</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Status</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Hide name</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Title</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Content</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Images</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Videos</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Votes</th>
+                    <th scope="col" style={{fontSize: '13px'}}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>

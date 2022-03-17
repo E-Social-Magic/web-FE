@@ -1,4 +1,3 @@
-
 import {
   Badge,
   Card,
@@ -21,20 +20,22 @@ import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/Avatar";
 
 const Groups = () => {
   const cookies = new Cookies();
   const [data, setData] = useState({ groups: [] });
 
   useEffect(async () => {
-    const result = await axios(
+    const result = await axios.get(
       "https://web-be-brmc9.ondigitalocean.app/api/groups",
-        {
-          headers: {
+      {
+        headers: {
           Authorization: "Bearer " + cookies.get("token"),
         },
       }
-    ); 
+    );
     setData(result.data);
     console.log(data.groups);
   }, []);
@@ -70,20 +71,33 @@ const Groups = () => {
                 className="align-items-center table-dark table-flush"
                 responsive
               >
-                <thead className="thead-dark">
+                <thead className="thead-dark ">
                   <tr>
-                    <th scope="col">Visible</th>
-                    <th scope="col">Avatar</th>
-                    <th scope="col">Group Name</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Subject</th>
-                    <th scope="col">
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Visible
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Avatar
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Group Name
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Status
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Subject
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Number of users
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data.groups.map((item) => (
+                  {data.groups.map((item, index) => (
                     <Render item={item} key={item.id} onToggle={onToggle} />
                   ))}
                 </tbody>
@@ -107,31 +121,33 @@ function Render({ item, onToggle }) {
             onToggle(item.id);
             setToggle(!toggle);
           }}
-          // onToggle={(item.id) => {
-          //   setState({
-          //     value: !value,
-          //   });
-          // }}
         />
         {toggle == false ? <span>Active</span> : <span>Block</span>}
       </th>
       <td>
-        <a
-          className="avatar rounded-circle mr-3"
-          href="#pablo"
-          onClick={(e) => e.preventDefault()}
-        >
-          <img alt="..." src={item.avatar} />
-        </a>
+        <Avatar alt="..." src={item.avatar} />
       </td>
-      <th scope="row" key={item}>
+      <td scope="row">
         <span className="mb-0 text-sm">{item.group_name}</span>
-      </th>
+      </td>
       <td>
         {item.private == false ? <span>Public</span> : <span>Private</span>}
       </td>
       <td>{item.subject}</td>
-      <td className="text-right">
+      <td>
+        {
+          (item.user_id.length == 0 ? (
+            "0"
+          ) : (
+            <AvatarGroup total={item.user_id.length}>
+              {item.user_id.map((ite) => (
+                <Avatar alt={ite.username} src={ite.avatar} />
+              ))}
+            </AvatarGroup>
+          ))
+        }
+      </td>
+      <td className="text-center">
         <UncontrolledDropdown>
           <DropdownToggle
             className="btn-icon-only text-light"

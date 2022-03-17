@@ -20,6 +20,7 @@ import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
+import Avatar from '@mui/material/Avatar';
 
 const Users = () => {
   const [data, setData] = useState({ users: [] });
@@ -71,12 +72,12 @@ const Users = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col">Visible</th>
-                    <th scope="col">Avatar</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">
+                    <th scope="col" style={{fontSize: '13px'}}>Visible</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Avatar</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Name</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Email</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Role</th>
+                    <th scope="col" style={{fontSize: '13px'}}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -111,13 +112,8 @@ function Render({ item, onToggle }) {
       </th>
       <th scope="row">
    
-          <a
-            className="avatar rounded-circle mr-3"
-            href="#pablo"
-            onClick={(e) => e.preventDefault()}
-          >
-            <img alt="..." src={item.avatar} />
-          </a>
+      <Avatar alt="..." src={item.avatar} />
+       
        
       </th>
       <td>{item.username}</td>

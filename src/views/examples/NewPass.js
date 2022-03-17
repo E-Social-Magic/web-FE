@@ -35,12 +35,12 @@ const NewPass = ({ email }) => {
   }
   const handleSubmit = async () => {
     if (!code) {
-      setErrCode("You must enter code.");
+      setErrCode("You must enter the code.");
     } else {
       setErrCode("");
     }
     if (!newPass) {
-      setErrPass("You must enter new password.");
+      setErrPass("You must enter a new password.");
     } else {
       setErrPass("");
     }
@@ -58,6 +58,8 @@ const NewPass = ({ email }) => {
       } else {
         if (newPass !== confirmPass) {
           setError("New password and confirm password are not the same.");
+        }else{
+          setError("Code incorrect!")
         }
       }
     } catch (error) {
@@ -80,18 +82,19 @@ const NewPass = ({ email }) => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
+          {error != "" ? (
+                <div
+                  style={{ fontFamily: "roboto" }}
+                  className="error text-danger text-center"
+                >
+                  {error}
+                </div>
+              ) : (
+                ""
+              )}
             <Form role="form">  
               <FormGroup className="mb-3">
-                {errCode != "" ? (
-                  <div
-                    style={{ fontFamily: "roboto" }}
-                    className="error text-danger text-center"
-                  >
-                    {errCode}
-                  </div>
-                ) : (
-                  ""
-                )}
+               
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -106,16 +109,16 @@ const NewPass = ({ email }) => {
                     autoComplete="new-code"
                   />
                 </InputGroup>
-                {error != "" ? (
-                <div
-                  style={{ fontFamily: "roboto" }}
-                  className="error text-danger text-center"
-                >
-                  {error}
-                </div>
-              ) : (
-                ""
-              )}
+                {errCode != "" ? (
+                  <div
+                    style={{ fontFamily: "roboto" }}
+                    className="error text-danger text-center"
+                  >
+                    {errCode}
+                  </div>
+                ) : (
+                  ""
+                )}
               </FormGroup>
               <FormGroup>
                 <InputGroup className="input-group-alternative">
