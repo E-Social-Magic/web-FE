@@ -63,7 +63,7 @@ const Users = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Card tables</h3>
+                <h3 className="text-white mb-0">Users</h3>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -106,11 +106,6 @@ function Render({ item, onToggle }) {
             onToggle(item.id);
             setToggle(!toggle);
           }}
-          // onToggle={(item.id) => {
-          //   setState({
-          //     value: !value,
-          //   });
-          // }}
         />
         {toggle == false ? <span>Active</span> : <span>Block</span>}
       </th>

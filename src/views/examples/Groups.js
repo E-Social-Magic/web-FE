@@ -28,8 +28,13 @@ const Groups = () => {
 
   useEffect(async () => {
     const result = await axios(
-      "https://web-be-brmc9.ondigitalocean.app/api/groups"
-    );
+      "https://web-be-brmc9.ondigitalocean.app/api/groups",
+        {
+          headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    ); 
     setData(result.data);
     console.log(data.groups);
   }, []);
