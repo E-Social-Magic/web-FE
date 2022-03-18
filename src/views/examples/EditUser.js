@@ -56,7 +56,35 @@ const EditUser = ({ match }) => {
 
   return (
     <>
-      <UserHeader />
+      {/* <UserHeader /> */}
+      <div
+        className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+        style={{
+          minHeight: "600px",
+          backgroundImage:
+            "url(" +
+            require("../../assets/img/theme/profile-cover.jpg").default +
+            ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center top",
+        }}
+      >
+        {/* Mask */}
+        <span className="mask bg-gradient-default opacity-8" />
+        {/* Header container */}
+        <Container className="d-flex align-items-center" fluid>
+          <Row>
+            <Col lg="7" md="10">
+              <h3 className="display-4  text-white">
+                This is {data.user.username}.
+              </h3>
+              <p className="text-white mt-0 mb-5">
+                You can see this user's details through the information below.
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </div>
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -75,8 +103,7 @@ const EditUser = ({ match }) => {
                   </div>
                 </Col>
               </Row>
-              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-              </CardHeader>
+              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
                   <div className="col">

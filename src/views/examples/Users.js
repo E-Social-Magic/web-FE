@@ -111,10 +111,7 @@ function Render({ item, onToggle }) {
         {toggle == false ? <span>Active</span> : <span>Block</span>}
       </th>
       <th scope="row">
-   
       <Avatar alt="..." src={item.avatar} />
-       
-       
       </th>
       <td>{item.username}</td>
       <td>{item.email}</td>

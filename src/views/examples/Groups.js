@@ -135,17 +135,18 @@ function Render({ item, onToggle }) {
       </td>
       <td>{item.subject}</td>
       <td>
-        {
-          (item.user_id.length == 0 ? (
+        {item.user_id.length}
+        {/* {
+          (item.user_id.length === 0 ? (
             "0"
           ) : (
             <AvatarGroup total={item.user_id.length}>
               {item.user_id.map((ite) => (
-                <Avatar alt={ite.username} src={ite.avatar} />
+                <Avatar/>
               ))}
             </AvatarGroup>
           ))
-        }
+        } */}
       </td>
       <td className="text-center">
         <UncontrolledDropdown>
