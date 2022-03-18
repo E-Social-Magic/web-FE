@@ -10,11 +10,11 @@ import Cookies from "universal-cookie";
 import routes from "routes.js";
 import Login from "views/examples/Login.js";
 import { useHistory } from "react-router-dom";
-
+const cookies = new Cookies();
+const cookie = cookies.get("token");
 const Admin = (props) => {
   const mainContent = React.useRef(null);
   const location = useLocation();
-  const cookies = new Cookies();
   const history = useHistory();
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
@@ -52,9 +52,8 @@ const Admin = (props) => {
 
   return (
     <>
-      {!cookies.get("token") ? (
-       history.push("/auth/login"),
-       window.location.reload()
+      { (!cookie) ? (
+        window.location.replace("/auth/login")
       ) : (
         <div>
           <Sidebar
@@ -81,7 +80,7 @@ const Admin = (props) => {
             </Container>
           </div>
         </div>
-      )}
+      )} 
     </>
   );
 };

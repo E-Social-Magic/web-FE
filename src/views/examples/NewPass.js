@@ -20,14 +20,14 @@ import { useHistory } from "react-router-dom";
 
 const NewPass = ({ email }) => {
   const [code, setCode] = useState("");
-  const [newPass, setNewPass] = useState("");
+  const [password, setpassword] = useState("");
   const [error, setError] = useState("");
   const [errCode, setErrCode] = useState("");
   const [errPass, setErrPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const [confirm, setconfirm] = useState("");
   const history = useHistory();
 
-  async function newPassWord(credentials) {
+  async function passwordWord(credentials) {
     return axios.post(
       "https://web-be-brmc9.ondigitalocean.app/api/sendmailForget/confirm",
       credentials
@@ -39,27 +39,27 @@ const NewPass = ({ email }) => {
     } else {
       setErrCode("");
     }
-    if (!newPass) {
+    if (!password) {
       setErrPass("You must enter a new password.");
     } else {
       setErrPass("");
     }
     try {
-      const user = await newPassWord({ email, code, newPass, confirmPass });
+      const user = await passwordWord({ email, code, password, confirm });
       console.log(user.data.succes);
       if (
         user.data.success === true &&
-        newPass === confirmPass &&
-        newPass !== ""
+        password === confirm &&
+        password !== ""
       ) {
         console.log(user.data);
         alert("Logged in successfully!");
         history.push("/admin/index");
       } else {
-        if (newPass !== confirmPass) {
+        if (password !== confirm) {
           setError("New password and confirm password are not the same.");
-        }else{
-          setError("Code incorrect!")
+        } else {
+          setError("Code incorrect!");
         }
       }
     } catch (error) {
@@ -82,19 +82,18 @@ const NewPass = ({ email }) => {
             </div>
           </CardHeader>
           <CardBody className="px-lg-5 py-lg-5">
-          {error != "" ? (
-                <div
-                  style={{ fontFamily: "roboto" }}
-                  className="error text-danger text-center"
-                >
-                  {error}
-                </div>
-              ) : (
-                ""
-              )}
-            <Form role="form">  
+            {error != "" ? (
+              <div
+                style={{ fontFamily: "roboto" }}
+                className="error text-danger text-center"
+              >
+                {error}
+              </div>
+            ) : (
+              ""
+            )}
+            <Form role="form">
               <FormGroup className="mb-3">
-               
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -130,7 +129,7 @@ const NewPass = ({ email }) => {
                   <Input
                     placeholder="New Password"
                     type="password"
-                    onChange={(e) => setNewPass(e.target.value)}
+                    onChange={(e) => setpassword(e.target.value)}
                     autoComplete="new-password"
                   />
                 </InputGroup>
@@ -155,7 +154,7 @@ const NewPass = ({ email }) => {
                   <Input
                     placeholder="Confirm Password"
                     type="password"
-                    onChange={(e) => setConfirmPass(e.target.value)}
+                    onChange={(e) => setconfirm(e.target.value)}
                     autoComplete="confirm-password"
                   />
                 </InputGroup>

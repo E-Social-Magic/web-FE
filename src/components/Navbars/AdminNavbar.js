@@ -20,11 +20,12 @@ import {
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useHistory } from "react-router-dom";
+
 const AdminNavbar = (props) => {
   const history = useHistory();
   const cookies = new Cookies();
   const handleLogout = () => {
-    cookies.remove("token");
+    cookies.remove("token", {path: "/"});
     history.push("/auth/login");
   };
 

@@ -76,7 +76,7 @@ const Users = () => {
                     <th scope="col" style={{fontSize: '13px'}}>Avatar</th>
                     <th scope="col" style={{fontSize: '13px'}}>Name</th>
                     <th scope="col" style={{fontSize: '13px'}}>Email</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Role</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Coins</th>
                     <th scope="col" style={{fontSize: '13px'}}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
@@ -115,7 +115,7 @@ function Render({ item, onToggle }) {
       </th>
       <td>{item.username}</td>
       <td>{item.email}</td>
-      <td>{item.role}</td>
+      <td>{item.coins}</td>
       <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle

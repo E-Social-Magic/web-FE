@@ -51,8 +51,9 @@ const Login = () => {
 
       const user = await loginUser({ email, password });
       if (user.data.token && user.data.role === "admin") {
-        cookies.set("token", user.data.token);
+        cookies.set("token", user.data.token, {path: "/"});
         history.push("/admin/index");
+        window.location.reload();
       } else {
         setErrName("email or password incorrect!");
       }
