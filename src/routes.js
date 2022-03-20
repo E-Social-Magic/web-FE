@@ -9,6 +9,7 @@ import Posts from "views/examples/Posts.js";
 import Coins from "views/examples/Coins.js";
 import Groups from "views/examples/Groups.js";
 import EditUser from "views/examples/EditUser.js";
+import Payments from "views/examples/Payments";
 
 var routes = [
   {
@@ -39,20 +40,20 @@ var routes = [
     component: Groups,
     layout: "/admin",
   },
-  {
-    path: "/coins",
-    name: "Coins",
-    icon: "ni ni-money-coins text-yellow",
-    component: Coins,
-    layout: "/admin",
-  },
   // {
-  //   path: "/comments",
-  //   name: "Comments",
-  //   icon: "ni ni-chat-round text-pink",
-  //   component: Comments,
+  //   path: "/coins",
+  //   name: "Coins",
+  //   icon: "ni ni-money-coins text-yellow",
+  //   component: Coins,
   //   layout: "/admin",
   // },
+  {
+    path: "/payments",
+    name: "Payments",
+    icon: "ni ni-money-coins text-yellow",
+    component: Payments,
+    layout: "/admin",
+  },
   {
     path: "/user-profile",
     name: "User Profile",

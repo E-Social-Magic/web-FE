@@ -22,8 +22,9 @@ const Profile = () => {
   const cookies = new Cookies();
   const [data, setData] = useState({ user: [] });
   useEffect(async () => {
+    const id = cookies.get("id");
     const result = await axios.get(
-      "https://web-be-brmc9.ondigitalocean.app/api/user/info",
+      "https://web-be-brmc9.ondigitalocean.app/api/user/"+ id +"/info",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),

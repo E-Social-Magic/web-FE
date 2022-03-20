@@ -23,6 +23,7 @@ import { useHistory } from "react-router-dom";
 const cookies = new Cookies();
 const Login = () => {
   const [email, setemail] = useState("");
+  const [nextStep, setStep] = useState(false);
   const [password, setPassword] = useState("");
   const [errName, setErrName] = useState("");
   const [errPass, setErrPass] = useState("");
@@ -52,10 +53,11 @@ const Login = () => {
       const user = await loginUser({ email, password });
       if (user.data.token && user.data.role === "admin") {
         cookies.set("token", user.data.token, {path: "/"});
+        cookies.set("id", user.data.id);
         history.push("/admin/index");
         window.location.reload();
       } else {
-        setErrName("email or password incorrect!");
+        setErrName("Email or password incorrect!");
       }
     } catch (error) {
       console.log(error);
