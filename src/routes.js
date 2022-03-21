@@ -8,8 +8,9 @@ import Users from "views/examples/Users.js";
 import Posts from "views/examples/Posts.js";
 import Coins from "views/examples/Coins.js";
 import Groups from "views/examples/Groups.js";
-import EditUser from "views/examples/EditUser.js";
-import Payments from "views/examples/Payments";
+import UserDetail from "views/examples/UserDetail.js";
+import Payments from "views/examples/Payments.js";
+import PaymentDetail from "views/examples/PaymentDetail.js"
 
 var routes = [
   {
@@ -85,8 +86,15 @@ var routes = [
   {
     path: "/user/:idUser/info",
     exact: true,
-    name: "EditUser",
-    component: ({ match }) => <EditUser match={match} />,
+    name: "UserDetail",
+    component: ({ match }) => <UserDetail match={match} />,
+    layout: "/admin",
+  },
+  {
+    path: "/payment/:idPayment",
+    exact: true,
+    name: "PaymentDetail",
+    component: ({ match }) => <PaymentDetail match={match} />,
     layout: "/admin",
   },
 ];

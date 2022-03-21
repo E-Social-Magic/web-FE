@@ -99,9 +99,10 @@ const Payments = () => {
                             onClick={(e) => e.preventDefault()}
                           >
                             <Link
-                              to={"/admin/user/" + item.id + "/info"}
+                              to={"/admin/payment/" + item.id}
                               className="edit-link"
                             >
+                  
                               <i className="fas fa-eye" /> View detail
                             </Link>
                           </DropdownItem>

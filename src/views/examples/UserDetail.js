@@ -21,7 +21,7 @@ import React from "react";
 import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
 
-const EditUser = ({ match }) => {
+const UserDetail = ({ match }) => {
   const cookies = new Cookies();
 
   const [data, setData] = useState({ user: [] });
@@ -247,35 +247,7 @@ const EditUser = ({ match }) => {
                         </FormGroup>
                       </Col>
                     </Row>
-                  </div>
-                  {/* <div className="pl-lg-4">
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-first-name"
-                          >
-                            Block
-                          </label>
-                          <th scope="row" >
-                            <ToggleButton
-                              value={toggle}
-                              onClick={() => {
-                                onToggle(data.user.id);
-                                setToggle(!toggle);
-                              }}
-                            />
-                            {toggle == false ? (
-                              <span>Active</span>
-                            ) : (
-                              <span>Block</span>
-                            )}
-                          </th>
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                  </div> */}
+                  </div> 
                 </Form>
               </CardBody>
             </Card>
@@ -286,4 +258,4 @@ const EditUser = ({ match }) => {
   );
 };
 
-export default EditUser;
+export default UserDetail;
