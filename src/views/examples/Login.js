@@ -31,7 +31,7 @@ const Login = () => {
 
   async function loginUser(credentials) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/login",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/login",
       credentials
     );
   }

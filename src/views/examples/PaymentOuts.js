@@ -18,12 +18,12 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 
-const Payments = () => {
+const PaymentOuts = () => {
   const [data, setData] = useState({ payments: [] });
   const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios.get(
-      "https://web-be-2-idkrb.ondigitalocean.app/api/payments",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/paymentOuts",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -65,7 +65,13 @@ const Payments = () => {
                       Result Code
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
+                      Display Name
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
                       User Name
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Phone number
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
@@ -80,7 +86,9 @@ const Payments = () => {
                     </th>
                     <td>{item.message}</td>
                     <td>{item.resultCode}</td>
+                    <td>{item.displayName}</td>
                     <td>{item.username}</td>
+                    <td>{item.phone}</td>
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle
@@ -99,7 +107,7 @@ const Payments = () => {
                             onClick={(e) => e.preventDefault()}
                           >
                             <Link
-                              to={"/admin/payment/" + item.id}
+                              to={"/admin/withdraw/" + item.id }
                               className="edit-link"
                             >
                   
@@ -128,4 +136,4 @@ const Payments = () => {
 
 
 
-export default Payments;
+export default PaymentOuts;

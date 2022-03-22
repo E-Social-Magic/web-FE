@@ -1,5 +1,4 @@
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
@@ -12,25 +11,21 @@ import {
 } from "reactstrap";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
-
-import { useHistory, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
-import ToggleButton from "react-toggle-button";
 
-const UserDetail = ({ match }) => {
+const PaymentOutDetail = ({ match }) => {
   const cookies = new Cookies();
 
   const [data, setData] = useState({});
 
   useEffect(async () => {
     console.log(match.params);
-    const { idPayment } = match.params;
+    const { idPaymentOut } = match.params;
     const result = await axios.get(
-      "https://web-be-2-idkrb.ondigitalocean.app/api/payment/" + idPayment,
+      "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" + idPaymentOut,
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -42,9 +37,9 @@ const UserDetail = ({ match }) => {
   }, []);
 
   return (
-    <>     {console.log(data.data)}
-      {data.data ? (
-   
+    <>
+      {console.log(data.payment)}
+      {data.payment ? (
         <>
           <div
             className="header d-flex align-items-center"
@@ -70,11 +65,15 @@ const UserDetail = ({ match }) => {
                   <CardHeader className="bg-white border-0"></CardHeader>
                   <CardBody>
                     <Form>
-                      <UserInfo idUser={data.data.extraData} />
+                      <UserInfo
+                        idUser={data.payment.user_id}
+                        // key = {data.payment.id}
+                      />
                       {/* {console.log(data.data.extraData)} */}
                       <h6 className="heading-small text-muted mb-4">
                         Payment information
                       </h6>
+
                       <hr className="my-4" />
                       <div className="pl-lg-4">
                         <Row>
@@ -88,7 +87,7 @@ const UserDetail = ({ match }) => {
                               </label>
                               <Input
                                 className="form-control-alternative"
-                                Value={data.data.orderId}
+                                Value={data.payment.orderId}
                               />
                             </FormGroup>
                           </Col>
@@ -102,7 +101,7 @@ const UserDetail = ({ match }) => {
                               </label>
                               <Input
                                 className="form-control-alternative"
-                                Value={data.data.amount}
+                                Value={data.payment.amount}
                               />
                             </FormGroup>
                           </Col>
@@ -112,78 +111,32 @@ const UserDetail = ({ match }) => {
                                 className="form-control-label"
                                 htmlFor="input-country"
                               >
-                                Response Time
+                                Display Name
                               </label>
                               <Input
                                 className="form-control-alternative"
-                                Value={data.data.responseTime}
+                                Value={data.payment.displayName}
                               />
                             </FormGroup>
                           </Col>
                         </Row>
                         <Row>
-                          <Col lg="4">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                              >
-                                extraData
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                Value={data.data.extraData}
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="4">
+                          <Col>
                             <FormGroup>
                               <label
                                 className="form-control-label"
                                 htmlFor="input-country"
                               >
-                                message
+                                Message
                               </label>
                               <Input
                                 className="form-control-alternative"
-                                Value={data.data.message}
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="4">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-country"
-                              >
-                                payType
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                Value={data.data.payType}
+                                Value={data.payment.message}
                               />
                             </FormGroup>
                           </Col>
                         </Row>
-                      </div>
-
-                      <hr className="my-4" />
-                      {/* Description */}
-                      <h6 className="heading-small text-muted mb-4">
-                        About me
-                      </h6>
-                      <div className="pl-lg-4">
-                        <FormGroup>
-                          <label>About Me</label>
-                          <Input
-                            className="form-control-alternative"
-                            placeholder="A few words about you ..."
-                            rows="4"
-                            defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                    Open Source."
-                            type="textarea"
-                          />
-                        </FormGroup>
+                        <TranStatus data={data.payment} id={data.payment.id}/>
                       </div>
                     </Form>
                   </CardBody>
@@ -224,6 +177,17 @@ function UserInfo({ idUser }) {
           <h6 className="heading-small text-muted mb-4">User information</h6>
           <hr className="my-4" />
           <div className="pl-lg-4">
+            {/* <Row className="order-lg-2" lg="3">
+              <div className="card-profile-image">
+                <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                  <img
+                    alt="..."
+                    className="rounded-circle"
+                    src={data.user.avatar}
+                  />
+                </a>
+              </div>
+            </Row> */}
             <Row>
               <Col lg="6">
                 <FormGroup>
@@ -271,7 +235,7 @@ function UserInfo({ idUser }) {
                   </label>
                   <Input
                     className="form-control-alternative"
-                    value={data.user.role}
+                    Value={data.user.role}
                     id="input-city"
                     placeholder="City"
                     type="text"
@@ -285,7 +249,7 @@ function UserInfo({ idUser }) {
                   </label>
                   <Input
                     className="form-control-alternative"
-                    value={data.user.coins}
+                    Value={data.user.coins}
                     id="input-country"
                     placeholder="Country"
                     type="text"
@@ -301,4 +265,64 @@ function UserInfo({ idUser }) {
     </>
   );
 }
-export default UserDetail;
+
+function TranStatus({ data, id }) {
+  const [resultTran, setResultTran] = useState(data.resultCode);
+  const [addrtype, setAddrtype] = useState([
+    "Processing",
+    "Successful transaction",
+    "Transaction faile"]);
+  const [status, setStatus] = useState();
+  const Add = addrtype.map((Add) => Add);
+  const handleAddrTypeChange = (e) => {{
+    
+    if((addrtype[e.target.value]) === "7000"){
+      setStatus("Processing");
+      console.log((addrtype[e.target.value]))
+    }
+    else if((addrtype[e.target.value]) === "0"){
+      setStatus("Successful transaction");
+      console.log((addrtype[e.target.value]))
+    }
+    else{
+      setStatus("Transaction faile");
+      console.log((addrtype[e.target.value]))
+    }
+
+    // if((addrtype[e.target.value]) == "Processing"){
+    //   setResultTran = "7000";
+      
+    // }else if((addrtype[e.target.value])=="Successful transaction"){
+    //   setResultTran = "0";
+    //   axios.get("https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/"+id+"?success=true"
+    //   )
+    // }else{
+    //   setResultTran = "1003";  
+    //   axios.get("https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/"+id+"?success=false")
+    // }
+    }
+  };
+  
+  return (
+    <>
+      <Row>
+        <Col>
+          <FormGroup>
+            <select
+              name="Payment status"
+              defaultValue={status}
+              onChange={e => handleAddrTypeChange(e)}
+            >
+              {Add.map((index, key) => (
+                <option key={key} value={data.resultCode}>
+                  {index}
+                </option>
+              ))}
+            </select>
+          </FormGroup>
+        </Col>
+      </Row>
+    </>
+  );
+}
+export default PaymentOutDetail;

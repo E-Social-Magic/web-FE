@@ -28,7 +28,7 @@ const Users = () => {
   const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios(
-      "https://web-be-brmc9.ondigitalocean.app/api/users",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/users",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -42,7 +42,7 @@ const Users = () => {
   const onToggle = (id) => {
     console.log(id);
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/user/" + id + "/block",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/user/" + id + "/block",
       null,
       {
         headers: {

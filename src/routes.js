@@ -11,6 +11,8 @@ import Groups from "views/examples/Groups.js";
 import UserDetail from "views/examples/UserDetail.js";
 import Payments from "views/examples/Payments.js";
 import PaymentDetail from "views/examples/PaymentDetail.js"
+import PaymentOuts from "views/examples/PaymentOuts.js"
+import PaymentOutDetail from "views/examples/PaymentOutDetail";
 
 var routes = [
   {
@@ -56,6 +58,13 @@ var routes = [
     layout: "/admin",
   },
   {
+    path: "/payments-out",
+    name: "Payments Out",
+    icon: "ni ni-money-coins text-yellow",
+    component: PaymentOuts,
+    layout: "/admin",
+  },
+  {
     path: "/user-profile",
     name: "User Profile",
     icon: "ni ni-single-02 text-yellow",
@@ -86,15 +95,19 @@ var routes = [
   {
     path: "/user/:idUser/info",
     exact: true,
-    name: "UserDetail",
     component: ({ match }) => <UserDetail match={match} />,
     layout: "/admin",
   },
   {
     path: "/payment/:idPayment",
     exact: true,
-    name: "PaymentDetail",
     component: ({ match }) => <PaymentDetail match={match} />,
+    layout: "/admin",
+  },
+  {
+    path: "/withdraw/:idPaymentOut",
+    exact: true,
+    component: ({ match }) => <PaymentOutDetail match={match} />,
     layout: "/admin",
   },
 ];

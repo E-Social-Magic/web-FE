@@ -27,7 +27,7 @@ const Forgot = () => {
 
   async function sendCode(email) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/sendmailForget",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/sendmailForget",
       { email: email }
     );
   }

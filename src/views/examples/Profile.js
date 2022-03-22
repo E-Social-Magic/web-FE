@@ -24,7 +24,7 @@ const Profile = () => {
   useEffect(async () => {
     const id = cookies.get("id");
     const result = await axios.get(
-      "https://web-be-brmc9.ondigitalocean.app/api/user/"+ id +"/info",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/user/"+ id +"/info",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -100,15 +100,12 @@ const Profile = () => {
               <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Detail Admin</h3>
+                    <h3 className="mb-0"> Admin Detail</h3>
                   </Col>
                 </Row>
               </CardHeader>
               <CardBody>
                 <Form>
-                  <h6 className="heading-small text-muted mb-4">
-                    Admin information
-                  </h6>
                   <div className="pl-lg-4">
                     <Row>
                       <Col lg="6">

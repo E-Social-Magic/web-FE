@@ -29,7 +29,7 @@ const Groups = () => {
 
   useEffect(async () => {
     const result = await axios.get(
-      "https://web-be-brmc9.ondigitalocean.app/api/groups",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/groups",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),

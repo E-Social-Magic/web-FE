@@ -56,7 +56,7 @@ const Sidebar = (props) => {
     return routes.map((prop, key) => {
       return (
         <>
-        {(prop.layout !=="/auth" && prop.path !== "/user/:idUser/info" && prop.path !=="/payment/:idPayment" )?
+        {(prop.layout !=="/auth" && prop.path !== "/user/:idUser/info" && prop.path !=="/payment/:idPayment" && prop.path !=="/withdraw/:idPaymentOut")?
         <NavItem key={key}>
           <NavLink
             to={prop.layout + prop.path}

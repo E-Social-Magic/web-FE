@@ -30,7 +30,7 @@ const UserDetail = ({ match }) => {
     console.log(match.params);
     const { idUser } = match.params;
     const result = await axios.get(
-      "https://web-be-brmc9.ondigitalocean.app/api/user/" + idUser + "/info",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/user/" + idUser + "/info",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -55,6 +55,7 @@ const UserDetail = ({ match }) => {
   // };
 
   return (
+    
     <>
       {/* <UserHeader /> */}
       <div
@@ -167,9 +168,6 @@ const UserDetail = ({ match }) => {
                           <Input
                             className="form-control-alternative"
                             Value={data.user.email}
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
                           />
                         </FormGroup>
                       </Col>
@@ -184,9 +182,6 @@ const UserDetail = ({ match }) => {
                           <Input
                             className="form-control-alternative"
                             Value={data.user.username}
-                            id="input-last-name"
-                            placeholder="Last name"
-                            type="text"
                           />
                         </FormGroup>
                       </Col>
@@ -207,9 +202,6 @@ const UserDetail = ({ match }) => {
                           <Input
                             className="form-control-alternative"
                             value={data.user.role}
-                            id="input-city"
-                            placeholder="City"
-                            type="text"
                           />
                         </FormGroup>
                       </Col>
@@ -224,14 +216,11 @@ const UserDetail = ({ match }) => {
                           <Input
                             className="form-control-alternative"
                             value={data.user.coins}
-                            id="input-country"
-                            placeholder="Country"
-                            type="text"
                           />
                         </FormGroup>
                       </Col>
                       <Col lg="4">
-                        <FormGroup>
+                        {/* <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-country"
@@ -244,7 +233,7 @@ const UserDetail = ({ match }) => {
                             placeholder="Postal code"
                             type="number"
                           />
-                        </FormGroup>
+                        </FormGroup> */}
                       </Col>
                     </Row>
                   </div> 

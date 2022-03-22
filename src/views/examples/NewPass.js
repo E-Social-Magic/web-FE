@@ -29,7 +29,7 @@ const NewPass = ({ email }) => {
 
   async function passwordWord(credentials) {
     return axios.post(
-      "https://web-be-brmc9.ondigitalocean.app/api/sendmailForget/confirm",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/sendmailForget/confirm",
       credentials
     );
   }
