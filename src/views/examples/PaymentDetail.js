@@ -19,7 +19,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
-import ToggleButton from "react-toggle-button";
 
 const UserDetail = ({ match }) => {
   const cookies = new Cookies();
@@ -42,18 +41,15 @@ const UserDetail = ({ match }) => {
   }, []);
 
   return (
-    <>     {console.log(data.data)}
+    <>
+      {" "}
+      {console.log(data.data)}
       {data.data ? (
-   
         <>
           <div
             className="header d-flex align-items-center"
             style={{
               minHeight: "100px",
-              backgroundImage:
-                "url(" +
-                require("../../assets/img/theme/profile-cover.jpg").default +
-                ")",
               backgroundSize: "cover",
               backgroundPosition: "center top",
             }}
@@ -61,7 +57,7 @@ const UserDetail = ({ match }) => {
           <span className="mask bg-gradient-default opacity-8" />
           <Container
             className="mt-10 align-center"
-            style={{ marginLeft: "15%" }}
+            style={{ marginLeft: "17%", width: "92%" }}
             fluid
           >
             <Row>
@@ -165,25 +161,6 @@ const UserDetail = ({ match }) => {
                             </FormGroup>
                           </Col>
                         </Row>
-                      </div>
-
-                      <hr className="my-4" />
-                      {/* Description */}
-                      <h6 className="heading-small text-muted mb-4">
-                        About me
-                      </h6>
-                      <div className="pl-lg-4">
-                        <FormGroup>
-                          <label>About Me</label>
-                          <Input
-                            className="form-control-alternative"
-                            placeholder="A few words about you ..."
-                            rows="4"
-                            defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                    Open Source."
-                            type="textarea"
-                          />
-                        </FormGroup>
                       </div>
                     </Form>
                   </CardBody>

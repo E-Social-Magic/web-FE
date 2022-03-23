@@ -17,9 +17,12 @@ import Header from "components/Headers/Header.js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import dateFormat from 'dateformat';
+import i18next from '../../i18n'
 
 const PaymentOuts = () => {
   const [data, setData] = useState({ payments: [] });
+  const [Mess, setMess] = useState("");
   const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios.get(
@@ -31,7 +34,16 @@ const PaymentOuts = () => {
       }
     );
     setData(result.data);
-    console.log(result.data.payments)
+    console.log(Mess);
+    // if (data.payment.resultCode === "0") {
+    //   setMess("Successful transaction.");
+    // } else if (data.payment.resultCode === "7000") {
+    //   setMess("The transaction is in progress.");
+    // } else if (data.payment.resultCode === "1003") {
+    //   setMess("The transaction has been cancelled.");
+    // } else {
+    //   setMess(" ");
+    // }
   }, []);
 
   return (
@@ -74,6 +86,12 @@ const PaymentOuts = () => {
                       Phone number
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
+                      Created At
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Updated At
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -84,11 +102,13 @@ const PaymentOuts = () => {
                     <th scope="row" key={item}>
                       {item.amount}
                     </th>
-                    <td>{item.message}</td>
+                    <td >{message(item.resultCode)}</td>
                     <td>{item.resultCode}</td>
                     <td>{item.displayName}</td>
                     <td>{item.username}</td>
                     <td>{item.phone}</td>
+                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle
@@ -134,6 +154,11 @@ const PaymentOuts = () => {
   );
 };
 
+function message(item){
 
+    if (item === "0") { return"Successful transaction."}
+    if (item === "7000") {return"The transaction is in progress."}
+    if (item === "1003") {return"The transaction has been cancelled."}
+    }
 
 export default PaymentOuts;

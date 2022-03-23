@@ -110,17 +110,18 @@ const UserDetail = ({ match }) => {
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
-                        <span className="heading">22</span>
-                        <span className="description">Friends</span>
+                        <span className="heading">0
+                          {/* {!data.user.follower.length ? data.user.follower.length:"0"} */}
+                          </span>
+                        <span className="description">Follower</span>
                       </div>
                       <div>
-                        <span className="heading">10</span>
-                        <span className="description">Photos</span>
+                        <span className="heading">0
+                          {/* {!data.user.follower.length ? data.user.following.length:"0"} */}
+                          </span>
+                        <span className="description">Following</span>
                       </div>
-                      <div>
-                        <span className="heading">89</span>
-                        <span className="description">Comments</span>
-                      </div>
+               
                     </div>
                   </div>
                 </Row>
@@ -191,7 +192,7 @@ const UserDetail = ({ match }) => {
 
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="4">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -205,7 +206,7 @@ const UserDetail = ({ match }) => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"

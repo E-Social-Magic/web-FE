@@ -92,6 +92,9 @@ const Groups = () => {
                       Number of users
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
+                      Number of posts
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -147,6 +150,9 @@ function Render({ item, onToggle }) {
             </AvatarGroup>
           ))
         } */}
+      </td>
+      <td>
+        {item.posts.length}
       </td>
       <td className="text-center">
         <UncontrolledDropdown>

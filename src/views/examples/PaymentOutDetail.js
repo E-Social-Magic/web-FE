@@ -8,6 +8,7 @@ import {
   Container,
   Col,
   Row,
+  Button,
 } from "reactstrap";
 
 // core components
@@ -15,15 +16,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
+const cookies = new Cookies();
 
 const PaymentOutDetail = ({ match }) => {
-  const cookies = new Cookies();
-
-  const [data, setData] = useState({});
+  const [data, setData] = useState({})
+  const [Mess, setMess] = useState("");
 
   useEffect(async () => {
-    console.log(match.params);
-    const { idPaymentOut } = match.params;
+    const { idPaymentOut } = match.params
     const result = await axios.get(
       "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" + idPaymentOut,
       {
@@ -31,24 +31,34 @@ const PaymentOutDetail = ({ match }) => {
           Authorization: "Bearer " + cookies.get("token"),
         },
       }
-    );
-    console.log(result.data);
+    )
     setData(result.data);
+    console.log(result.data);
+    console.log(result.data.payment);
+    console.log(result.data.payment.resultCode);
+    if (result.data.payment.resultCode === "0") {
+      setMess("Successful transaction.");
+    } 
+    if (result.data.payment.resultCode === "7000") {
+      setMess("The transaction is in progress.");
+    } 
+    if (result.data.payment.resultCode === "1003") {
+      setMess("The transaction has been cancelled.");
+    }
   }, []);
 
+  
+
   return (
-    <>
-      {console.log(data.payment)}
+    <>{
+      
+    }
       {data.payment ? (
         <>
           <div
             className="header d-flex align-items-center"
             style={{
               minHeight: "100px",
-              backgroundImage:
-                "url(" +
-                require("../../assets/img/theme/profile-cover.jpg").default +
-                ")",
               backgroundSize: "cover",
               backgroundPosition: "center top",
             }}
@@ -56,7 +66,7 @@ const PaymentOutDetail = ({ match }) => {
           <span className="mask bg-gradient-default opacity-8" />
           <Container
             className="mt-10 align-center"
-            style={{ marginLeft: "15%" }}
+            style={{ marginLeft: "17%", width: "92%" }}
             fluid
           >
             <Row>
@@ -131,12 +141,12 @@ const PaymentOutDetail = ({ match }) => {
                               </label>
                               <Input
                                 className="form-control-alternative"
-                                Value={data.payment.message}
+                                Value={Mess}
                               />
                             </FormGroup>
                           </Col>
                         </Row>
-                        <TranStatus data={data.payment} id={data.payment.id}/>
+                        <TranStatus data={data.payment} id={data.payment.id} />
                       </div>
                     </Form>
                   </CardBody>
@@ -154,8 +164,6 @@ const PaymentOutDetail = ({ match }) => {
 
 function UserInfo({ idUser }) {
   console.log(idUser);
-  const cookies = new Cookies();
-
   const [data, setData] = useState({ user: [] });
 
   useEffect(async () => {
@@ -166,15 +174,14 @@ function UserInfo({ idUser }) {
           Authorization: "Bearer " + cookies.get("token"),
         },
       }
-    );
-    console.log(result.data.user);
+    )
     setData(result.data);
   }, []);
   return (
     <>
       {data.user ? (
         <>
-          <h6 className="heading-small text-muted mb-4">User information</h6>
+          <h6 className="heading-small text-muted mb-4">User information </h6>
           <hr className="my-4" />
           <div className="pl-lg-4">
             {/* <Row className="order-lg-2" lg="3">
@@ -268,60 +275,72 @@ function UserInfo({ idUser }) {
 
 function TranStatus({ data, id }) {
   const [resultTran, setResultTran] = useState(data.resultCode);
-  const [addrtype, setAddrtype] = useState([
-    "Processing",
-    "Successful transaction",
-    "Transaction faile"]);
-  const [status, setStatus] = useState();
-  const Add = addrtype.map((Add) => Add);
-  const handleAddrTypeChange = (e) => {{
-    
-    if((addrtype[e.target.value]) === "7000"){
-      setStatus("Processing");
-      console.log((addrtype[e.target.value]))
-    }
-    else if((addrtype[e.target.value]) === "0"){
-      setStatus("Successful transaction");
-      console.log((addrtype[e.target.value]))
-    }
-    else{
-      setStatus("Transaction faile");
-      console.log((addrtype[e.target.value]))
-    }
-
-    // if((addrtype[e.target.value]) == "Processing"){
-    //   setResultTran = "7000";
-      
-    // }else if((addrtype[e.target.value])=="Successful transaction"){
-    //   setResultTran = "0";
-    //   axios.get("https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/"+id+"?success=true"
-    //   )
-    // }else{
-    //   setResultTran = "1003";  
-    //   axios.get("https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/"+id+"?success=false")
-    // }
-    }
+  console.log(id);
+  const Cancel = (id) => {
+    return axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" +
+        id +
+        "?success=false",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
   };
-  
+
+  const Confirm = (id) => {
+    return axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" +
+        id +
+        "?fail=true",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+  };
+
   return (
     <>
-      <Row>
-        <Col>
-          <FormGroup>
-            <select
-              name="Payment status"
-              defaultValue={status}
-              onChange={e => handleAddrTypeChange(e)}
-            >
-              {Add.map((index, key) => (
-                <option key={key} value={data.resultCode}>
-                  {index}
-                </option>
-              ))}
-            </select>
-          </FormGroup>
-        </Col>
-      </Row>
+      {resultTran === "7000" ? (
+        <>
+          <hr className="my-4" />
+          <Row>
+            <Col>
+              <FormGroup>
+                <div>
+                  <Button
+                    className="bg-danger "
+                    style={{ color: "white" }}
+                    disabled
+                    onClick={Cancel(id)}
+                  >
+                    CANCEL TRANSACTION <i className="ni ni-fat-remove"></i>
+                  </Button>
+                </div>
+              </FormGroup>
+            </Col>
+            <Col lg="4">
+              <FormGroup>
+                <div>
+                  <Button
+                    className="bg-success"
+                    style={{ color: "white" }}
+                    disabled
+                    onClick={Confirm(id)}
+                  >
+                    CONFIRM TRANSACTION <i className="ni ni-check-bold"></i>
+                  </Button>
+                </div>
+              </FormGroup>
+            </Col>
+          </Row>
+        </>
+      ) : (
+        ""
+      )}
     </>
   );
 }

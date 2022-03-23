@@ -17,6 +17,7 @@ import Header from "components/Headers/Header.js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import dateFormat from 'dateformat';
 
 const Payments = () => {
   const [data, setData] = useState({ payments: [] });
@@ -68,6 +69,12 @@ const Payments = () => {
                       User Name
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
+                      Created At
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Updated At
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -81,6 +88,8 @@ const Payments = () => {
                     <td>{item.message}</td>
                     <td>{item.resultCode}</td>
                     <td>{item.username}</td>
+                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle
