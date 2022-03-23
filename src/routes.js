@@ -6,7 +6,6 @@ import Forgot from "views/examples/Forgot.js";
 import NewPass from "views/examples/NewPass.js";
 import Users from "views/examples/Users.js";
 import Posts from "views/examples/Posts.js";
-import Coins from "views/examples/Coins.js";
 import Groups from "views/examples/Groups.js";
 import UserDetail from "views/examples/UserDetail.js";
 import Payments from "views/examples/Payments.js";
@@ -43,13 +42,6 @@ var routes = [
     component: Groups,
     layout: "/admin",
   },
-  // {
-  //   path: "/coins",
-  //   name: "Coins",
-  //   icon: "ni ni-money-coins text-yellow",
-  //   component: Coins,
-  //   layout: "/admin",
-  // },
   {
     path: "/payments",
     name: "Payments",
