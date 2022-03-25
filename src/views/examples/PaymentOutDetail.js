@@ -58,7 +58,7 @@ const PaymentOutDetail = ({ match }) => {
           <div
             className="header d-flex align-items-center"
             style={{
-              minHeight: "100px",
+              minHeight: "80px",
               backgroundSize: "cover",
               backgroundPosition: "center top",
             }}
@@ -72,7 +72,13 @@ const PaymentOutDetail = ({ match }) => {
             <Row>
               <Col className="order-xl-1" xl="8">
                 <Card className="bg-secondary shadow">
-                  <CardHeader className="bg-white border-0"></CardHeader>
+                <CardHeader className="bg-white border-0">
+                <Row className="align-items-center">
+                  <Col xs="8">
+                    <h3 className="mb-0">Payment out detail</h3>
+                  </Col>
+                </Row>
+              </CardHeader>
                   <CardBody>
                     <Form>
                       <UserInfo

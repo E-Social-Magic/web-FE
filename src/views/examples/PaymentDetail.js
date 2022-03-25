@@ -49,7 +49,7 @@ const UserDetail = ({ match }) => {
           <div
             className="header d-flex align-items-center"
             style={{
-              minHeight: "100px",
+              minHeight: "80px",
               backgroundSize: "cover",
               backgroundPosition: "center top",
             }}
@@ -63,13 +63,13 @@ const UserDetail = ({ match }) => {
             <Row>
               <Col className="order-xl-1" xl="8">
                 <Card className="bg-secondary shadow">
-                  <CardHeader className="bg-white border-0"></CardHeader>
+                  <CardHeader className="bg-white border-0">Payment detail</CardHeader>
                   <CardBody>
                     <Form>
                       <UserInfo idUser={data.data.extraData} />
                       {/* {console.log(data.data.extraData)} */}
                       <h6 className="heading-small text-muted mb-4">
-                        Payment information
+                        Payment Inormation
                       </h6>
                       <hr className="my-4" />
                       <div className="pl-lg-4">

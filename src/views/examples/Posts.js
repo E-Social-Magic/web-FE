@@ -1,18 +1,15 @@
-
 import {
-  Badge,
   Card,
   CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Progress,
   Table,
-  Container,
   Row,
-  UncontrolledTooltip,
+  FormGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+  InputGroup,
+  Container,
+  Col
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -21,10 +18,12 @@ import axios from "axios";
 import React from "react";
 import ToggleButton from "react-toggle-button";
 import Cookies from "universal-cookie";
-import dateFormat from 'dateformat';
+import dateFormat from "dateformat";
 
 const Posts = () => {
   const [data, setData] = useState({ posts: [] });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios(
@@ -36,7 +35,7 @@ const Posts = () => {
       }
     );
     setData(result.data);
-    console.log(data.posts);
+    console.log(result.data);
   }, []);
 
   const onToggle = (id) => {
@@ -52,6 +51,16 @@ const Posts = () => {
     );
   };
 
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  React.useEffect(() => {
+    const results = data.posts.filter(({content}) =>
+    content.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
+
   return (
     <div>
       <Header />
@@ -63,34 +72,86 @@ const Posts = () => {
         <Row className="mt-5">
           <div className="col">
             <Card className="bg-default shadow">
-              <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Posts</h3>
-              </CardHeader>
+              <Row>
+                <Col lg="6">
+                  <CardHeader className="bg-transparent border-0">
+                    <h3 className="text-white mb-0">Posts</h3>
+                  </CardHeader>
+                </Col>
+                <Col lg="6">
+                  <FormGroup className="mb-0">
+                    <InputGroup
+                      className="input-group-alternative"
+                      style={{
+                        width: "75%",
+                        marginTop: "10px",
+                        marginLeft: "20%",
+                      }}
+                    >
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="fas fa-search" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Search"
+                        type="text"
+                        value={searchTerm}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                </Col>
+              </Row>
               <Table
                 className="align-items-center table-dark table-flush"
                 responsive
               >
                 <thead className="thead-dark">
                   <tr>
-                    <th scope="col" style={{fontSize: '13px'}}>Visible</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Username</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Status</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Hide name</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Title</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Content</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Images</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Videos</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Created At</th>
-                    <th scope="col" style={{fontSize: '13px'}}>Votes</th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Visible
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Content
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Username
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Status
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Hide name
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Title
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Images
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Videos
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Created At
+                    </th>
+                    <th scope="col" style={{ fontSize: "13px" }}>
+                      Votes
+                    </th>
                     {/* <th scope="col" style={{fontSize: '13px'}}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th> */}
                   </tr>
                 </thead>
                 <tbody>
-                  {data.posts.map((item) => (
-                    <Render item={item} key={item.id} onToggle={onToggle} />
-                  ))}
+                  {searchTerm
+                    ? searchResults.map((item, index) => (
+                        <Render key={index} item={item} onToggle={onToggle} />
+                      ))
+                    : data.posts.map((item) => (
+                        <Render item={item} key={item.id} onToggle={onToggle} />
+                      ))}
                 </tbody>
               </Table>
             </Card>
@@ -114,21 +175,18 @@ function Render({ item, onToggle }) {
           }}
         />
         {toggle == false ? <span>Active</span> : <span>Block</span>}
-      </th>
-      <th scope="row" >
+      </th>   
+      <td>{item.content}</td>
+      <th scope="row">
         <span className="mb-0 text-sm">{item.username}</span>
       </th>
       <td>
         {item.private == false ? <span>Public</span> : <span>Private</span>}
       </td>
-      <td>
-        {item.private == false ? <span>No</span> : <span>Yes</span>}
-      </td>
-      <th scope="row" >
+      <td>{item.private == false ? <span>No</span> : <span>Yes</span>}</td>
+      <th scope="row">
         <span className="mb-0 text-sm">{item.title}</span>
       </th>
-
-      <td>{item.content}</td>
       <td>
         {item.images.map((ite) => (
           <p>

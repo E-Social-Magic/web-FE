@@ -1,17 +1,15 @@
 import {
-  Badge,
   Card,
   CardHeader,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  Media,
-  Progress,
   Table,
-  Container,
   Row,
-  UncontrolledTooltip,
+  FormGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Input,
+  InputGroup,
+  Container,
+  Col
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -27,6 +25,8 @@ import dateFormat from 'dateformat';
 const Groups = () => {
   const cookies = new Cookies();
   const [data, setData] = useState({ groups: [] });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   useEffect(async () => {
     const result = await axios.get(
@@ -54,6 +54,16 @@ const Groups = () => {
     );
   };
 
+  const handleChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  React.useEffect(() => {
+    const results = data.groups.filter(({subject}) =>
+    subject.toLowerCase().includes(searchTerm)
+    );
+    setSearchResults(results);
+  }, [searchTerm]);
+
   return (
     <div>
       <Header />
@@ -66,7 +76,37 @@ const Groups = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Groups</h3>
+              <Row>
+                <Col lg="6">
+                  <CardHeader className="bg-transparent border-0">
+                    <h3 className="text-white mb-0">Groups</h3>
+                  </CardHeader>
+                </Col>
+                <Col lg="6">
+                  <FormGroup className="mb-0">
+                    <InputGroup
+                      className="input-group-alternative"
+                      style={{
+                        width: "75%",
+                        marginTop: "10px",
+                        marginLeft: "20%",
+                      }}
+                    >
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="fas fa-search" />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input
+                        placeholder="Search"
+                        type="text"
+                        value={searchTerm}
+                        onChange={handleChange}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                </Col>
+              </Row>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -104,9 +144,13 @@ const Groups = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.groups.map((item, index) => (
-                    <Render item={item} key={item.id} onToggle={onToggle} />
-                  ))}
+                {searchTerm
+                    ? searchResults.map((item, index) => (
+                        <Render key={index} item={item} onToggle={onToggle} />
+                      ))
+                    : data.groups.map((item) => (
+                        <Render item={item} key={item.id} onToggle={onToggle} />
+                      ))}
                 </tbody>
               </Table>
             </Card>

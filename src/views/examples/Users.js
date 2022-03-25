@@ -13,7 +13,7 @@ import {
   Input,
   InputGroup,
   Container,
-  Col,
+  Col
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
@@ -58,11 +58,11 @@ const Users = () => {
     );
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     setSearchTerm(event.target.value);
   };
- React.useEffect(() => {
-    const results = data.users.filter(({username}) =>
+  React.useEffect(() => {
+    const results = data.users.filter(({ username }) =>
       username.toLowerCase().includes(searchTerm)
     );
     setSearchResults(results);
@@ -89,7 +89,11 @@ const Users = () => {
                   <FormGroup className="mb-0">
                     <InputGroup
                       className="input-group-alternative"
-                      style={{ width: "95%", marginTop: "10px" }}
+                      style={{
+                        width: "75%",
+                        marginTop: "10px",
+                        marginLeft: "20%",
+                      }}
                     >
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -145,16 +149,13 @@ const Users = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchTerm?
-                   searchResults.map((item,index) => (
-                    <Render key={index} item={item} onToggle={onToggle} />
-                    ))
-                  :
-                     data.users.map((item) => (
-                      <Render item={item} key={item.id} onToggle={onToggle} />
-                    ))
-                  }
-                 
+                  {searchTerm
+                    ? searchResults.map((item, index) => (
+                        <Render key={index} item={item} onToggle={onToggle} />
+                      ))
+                    : data.users.map((item) => (
+                        <Render item={item} key={item.id} onToggle={onToggle} />
+                      ))}
                 </tbody>
               </Table>
             </Card>
@@ -186,8 +187,8 @@ function Render({ item, onToggle }) {
       <td>{item.email}</td>
       <td>{item.follower.length}</td>
       <td>{item.following.length}</td>
-      <td>{item.subjects.length}</td>
       <td>{item.coins}</td>
+      <td>{item.subjects.length}</td>
       <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
       <td className="text-right">
         <UncontrolledDropdown>

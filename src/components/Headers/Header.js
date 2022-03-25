@@ -67,12 +67,12 @@ const Header = () => {
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{user.users.length}</span>
                       </div>
-                      {/* <Col className="col-auto">
+                      <Col className="col-auto">
                         <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
                        
                           <i className="fas fa-users" />
                         </div>
-                      </Col> */}
+                      </Col>
                     </Row>
                     {/* <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
@@ -98,11 +98,11 @@ const Header = () => {
                           {group.groups.length}
                         </span>
                       </div>
-                      {/* <Col className="col-auto">
+                      <Col className="col-auto">
                         <div className="icon icon-shape bg-danger text-white rounded-circle shadow">
                           <i className="fas fa-chart-bar" />
                         </div>
-                      </Col> */}
+                      </Col>
                     </Row>
                     {/* <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-danger mr-2">
@@ -126,11 +126,11 @@ const Header = () => {
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{post.posts.length}</span>
                       </div>
-                      {/* <Col className="col-auto">
+                      <Col className="col-auto">
                         <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                        <i className="fas fa-chart-pie" />
+                        <i className="fas fa-newspaper" />
                         </div>
-                      </Col> */}
+                      </Col>
                     </Row>
                     {/* <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-warning mr-2">
@@ -154,11 +154,11 @@ const Header = () => {
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{group.groups.length}</span>
                       </div>
-                      {/* <Col className="col-auto">
+                      <Col className="col-auto">
                         <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                          <i className="fas fa-percent" />
+                          <i className="fas fa-folder" />
                         </div>
-                      </Col> */}
+                      </Col>
                     </Row>
                     {/* <p className="mt-3 mb-0 text-muted text-sm">
                       <span className="text-success mr-2">
