@@ -9,7 +9,7 @@ const UserHeader = () => {
   const [data, setData] = useState({ user: [] });
   useEffect(async () => {
     const result = await axios.get(
-      "https://web-be-brmc9.ondigitalocean.app/api/user/info",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/user/info",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),

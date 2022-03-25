@@ -12,13 +12,21 @@ import Payments from "views/examples/Payments.js";
 import PaymentDetail from "views/examples/PaymentDetail.js"
 import PaymentOuts from "views/examples/PaymentOuts.js"
 import PaymentOutDetail from "views/examples/PaymentOutDetail";
+import Dashboard from "views/examples/Dashboard";
 
 var routes = [
+  // {
+  //   path: "/index",
+  //   name: "Dashboard",
+  //   icon: "ni ni-tv-2 text-primary",
+  //   component: Index,
+  //   layout: "/admin",
+  // },
   {
     path: "/index",
     name: "Dashboard",
     icon: "ni ni-tv-2 text-primary",
-    component: Index,
+    component: Dashboard,
     layout: "/admin",
   },
   {
@@ -45,7 +53,7 @@ var routes = [
   {
     path: "/payments",
     name: "Payments",
-    icon: "ni ni-money-coins text-yellow",
+    icon: "ni ni-money-coins text-orange",
     component: Payments,
     layout: "/admin",
   },
@@ -58,8 +66,8 @@ var routes = [
   },
   {
     path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
+    name: "Admin Profile",
+    icon: "ni ni-single-02 text-pink",
     component: Profile,
     layout: "/admin",
   },

@@ -20,6 +20,7 @@ import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
+import { Avatar } from "@mui/material";
 
 const UserDetail = ({ match }) => {
   const cookies = new Cookies();
@@ -95,11 +96,12 @@ const UserDetail = ({ match }) => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
+                             <Avatar
+                        style={{width: "85px", height: "85px"}}
                         alt="..."
                         className="rounded-circle"
-                        src={data.user.avatar}
-                      />
+                        src={data.user.avatar
+                        }/>
                     </a>
                   </div>
                 </Col>

@@ -21,6 +21,8 @@ const Chart = require("chart.js");
 // Code from: https://codepen.io/jedtrow/full/ygRYgo
 //
 
+
+
 Chart.elements.Rectangle.prototype.draw = function () {
   var ctx = this._chart.ctx;
   var vm = this._view;
@@ -308,6 +310,7 @@ function parseOptions(parent, options) {
 
 // Example 1 of Chart inside src/views/Index.js (Sales value - Card)
 let chartExample1 = {
+  
   options: {
     scales: {
       yAxes: [
@@ -343,6 +346,8 @@ let chartExample1 = {
       },
     },
   },
+
+
   data1: (canvas) => {
     return {
       labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -404,7 +409,7 @@ let chartExample2 = {
     datasets: [
       {
         label: "Sales",
-        data: [25, 20, 30, 22, 17, 29],
+        data: [25, 20, 30, 22, 17, 20],
         maxBarThickness: 10,
       },
     ],

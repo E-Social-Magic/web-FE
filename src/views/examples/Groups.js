@@ -22,6 +22,7 @@ import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/Avatar";
+import dateFormat from 'dateformat';
 
 const Groups = () => {
   const cookies = new Cookies();
@@ -37,7 +38,7 @@ const Groups = () => {
       }
     );
     setData(result.data);
-    console.log(data.groups);
+    console.log(result.data.groups);
   }, []);
 
   const onToggle = (id) => {
@@ -95,8 +96,11 @@ const Groups = () => {
                       Number of posts
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      <i className="ni ni-settings-gear-65"></i>
+                      Created At
                     </th>
+                    {/* <th scope="col" style={{ fontSize: "13px" }}>
+                      <i className="ni ni-settings-gear-65"></i>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -154,7 +158,8 @@ function Render({ item, onToggle }) {
       <td>
         {item.posts.length}
       </td>
-      <td className="text-center">
+      <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+      {/* <td className="text-center">
         <UncontrolledDropdown>
           <DropdownToggle
             className="btn-icon-only text-light"
@@ -178,7 +183,7 @@ function Render({ item, onToggle }) {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-      </td>
+      </td> */}
     </tr>
   );
 }

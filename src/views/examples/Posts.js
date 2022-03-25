@@ -21,6 +21,7 @@ import axios from "axios";
 import React from "react";
 import ToggleButton from "react-toggle-button";
 import Cookies from "universal-cookie";
+import dateFormat from 'dateformat';
 
 const Posts = () => {
   const [data, setData] = useState({ posts: [] });
@@ -79,10 +80,11 @@ const Posts = () => {
                     <th scope="col" style={{fontSize: '13px'}}>Content</th>
                     <th scope="col" style={{fontSize: '13px'}}>Images</th>
                     <th scope="col" style={{fontSize: '13px'}}>Videos</th>
+                    <th scope="col" style={{fontSize: '13px'}}>Created At</th>
                     <th scope="col" style={{fontSize: '13px'}}>Votes</th>
-                    <th scope="col" style={{fontSize: '13px'}}>
+                    {/* <th scope="col" style={{fontSize: '13px'}}>
                       <i className="ni ni-settings-gear-65"></i>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -145,8 +147,9 @@ function Render({ item, onToggle }) {
           </p>
         ))}
       </td>
+      <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
       <td>{item.votes}</td>
-      <td className="text-right">
+      {/* <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle
             className="btn-icon-only text-light"
@@ -170,7 +173,7 @@ function Render({ item, onToggle }) {
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
-      </td>
+      </td> */}
     </tr>
   );
 }

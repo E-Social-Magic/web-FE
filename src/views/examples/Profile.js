@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import Cookies from "universal-cookie";
+import Avatar from '@mui/material/Avatar';
 
 const Profile = () => {
   const cookies = new Cookies();
@@ -47,7 +48,8 @@ const Profile = () => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
+                      <Avatar
+                        style={{width: "85px", height: "85px"}}
                         alt="..."
                         className="rounded-circle"
                         src={data.user.avatar
@@ -131,7 +133,7 @@ const Profile = () => {
 
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="4">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -148,7 +150,7 @@ const Profile = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">
+                      <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -165,7 +167,7 @@ const Profile = () => {
                           />
                         </FormGroup>
                       </Col>
-                      <Col lg="4">
+                      {/* <Col lg="4">
                         <FormGroup>
                           <label
                             className="form-control-label"
@@ -180,7 +182,7 @@ const Profile = () => {
                             type="number"
                           />
                         </FormGroup>
-                      </Col>
+                      </Col> */}
                     </Row>
                   </div>
                 </Form>
