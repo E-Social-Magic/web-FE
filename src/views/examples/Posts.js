@@ -163,7 +163,7 @@ const Posts = () => {
 };
 
 function Render({ item, onToggle }) {
-  const [toggle, setToggle] = useState(item.blocked);
+  const [toggle, setToggle] = useState(!item.blocked);
   return (
     <tr>
       <th scope="row" key={item}>
@@ -174,7 +174,7 @@ function Render({ item, onToggle }) {
             setToggle(!toggle);
           }}
         />
-        {toggle == false ? <span>Active</span> : <span>Block</span>}
+        {toggle == !false ? <span>Active</span> : <span>Block</span>}
       </th>   
       <td>{item.content}</td>
       <th scope="row">

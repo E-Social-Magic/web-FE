@@ -108,25 +108,25 @@ const UserDetail = ({ match }) => {
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></CardHeader>
               <CardBody className="pt-0 pt-md-4">
-                <Row>
+                {/* <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
-                        <span className="heading">0
-                          {/* {!data.user.follower.length ? data.user.follower.length:"0"} */}
+                        <span className="heading">
+                          {data.user.follower.length}
                           </span>
                         <span className="description">Follower</span>
                       </div>
                       <div>
-                        <span className="heading">0
-                          {/* {!data.user.follower.length ? data.user.following.length:"0"} */}
+                        <span className="heading">
+                          {data.user.following.length}
                           </span>
                         <span className="description">Following</span>
                       </div>
                
                     </div>
                   </div>
-                </Row>
+                </Row> */}
                 <div className="text-center">
                   <h3>
                     {data.user.username}

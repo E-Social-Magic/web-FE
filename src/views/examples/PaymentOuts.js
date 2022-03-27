@@ -98,8 +98,8 @@ const PaymentOuts = () => {
                     <td>{item.displayName}</td>
                     <td>{item.username}</td>
                     <td>{item.phone}</td>
-                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
-                    <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+                    <td>{new Date(item.createdAt).toLocaleDateString("en-US")}</td>       
+                    <td>{new Date(item.updatedAt).toLocaleDateString("en-US")}</td>
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle

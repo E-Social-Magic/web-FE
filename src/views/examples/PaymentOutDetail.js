@@ -286,7 +286,7 @@ function TranStatus({ data, id }) {
     return axios.get(
       "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" +
         id +
-        "?success=false",
+        "?success=true",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),

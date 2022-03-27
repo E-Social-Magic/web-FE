@@ -25,7 +25,7 @@ const Header = () => {
 
   useEffect(async () => {
     const result = await axios.get(
-      "https://web-be-2-idkrb.ondigitalocean.app/api/groups",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/groups?offset=1&limit=50",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -63,7 +63,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          New users
+                          Total Users
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{user.users.length}</span>
                       </div>
@@ -92,7 +92,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Groups
+                         Total Groups
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">
                           {group.groups.length}
@@ -122,7 +122,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Posts
+                         Total Posts
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{post.posts.length}</span>
                       </div>
@@ -150,7 +150,7 @@ const Header = () => {
                           tag="h5"
                           className="text-uppercase text-muted mb-0"
                         >
-                          Subjects
+                         Total Subjects
                         </CardTitle>
                         <span className="h2 font-weight-bold mb-0">{group.groups.length}</span>
                       </div>

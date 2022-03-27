@@ -1,15 +1,20 @@
 import {
   Card,
   CardHeader,
+  CardFooter,
   Table,
   Row,
   FormGroup,
   InputGroupAddon,
   InputGroupText,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Progress,
   Input,
   InputGroup,
   Container,
-  Col
+  Col,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -20,11 +25,13 @@ import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/Avatar";
-import dateFormat from 'dateformat';
+import dateFormat from "dateformat";
 
 const Groups = () => {
   const cookies = new Cookies();
   const [data, setData] = useState({ groups: [] });
+  const [data1, setData1] = useState({ groups: [] });
+  const [next, setNext] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
@@ -58,11 +65,24 @@ const Groups = () => {
     setSearchTerm(event.target.value);
   };
   React.useEffect(() => {
-    const results = data.groups.filter(({subject}) =>
-    subject.toLowerCase().includes(searchTerm)
+    const results = data.groups.filter(({ subject }) =>
+      subject.toLowerCase().includes(searchTerm)
     );
     setSearchResults(results);
   }, [searchTerm]);
+
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/groups?offset=2",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+    setData1(result.data);
+    console.log(result.data.groups);
+  }, []);
 
   return (
     <div>
@@ -76,37 +96,37 @@ const Groups = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-              <Row>
-                <Col lg="6">
-                  <CardHeader className="bg-transparent border-0">
-                    <h3 className="text-white mb-0">Groups</h3>
-                  </CardHeader>
-                </Col>
-                <Col lg="6">
-                  <FormGroup className="mb-0">
-                    <InputGroup
-                      className="input-group-alternative"
-                      style={{
-                        width: "75%",
-                        marginTop: "10px",
-                        marginLeft: "20%",
-                      }}
-                    >
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="fas fa-search" />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        placeholder="Search"
-                        type="text"
-                        value={searchTerm}
-                        onChange={handleChange}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                </Col>
-              </Row>
+                <Row>
+                  <Col lg="6">
+                    <CardHeader className="bg-transparent border-0">
+                      <h3 className="text-white mb-0">Groups</h3>
+                    </CardHeader>
+                  </Col>
+                  <Col lg="6">
+                    <FormGroup className="mb-0">
+                      <InputGroup
+                        className="input-group-alternative"
+                        style={{
+                          width: "75%",
+                          marginTop: "10px",
+                          marginLeft: "20%",
+                        }}
+                      >
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="fas fa-search" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder="Search"
+                          type="text"
+                          value={searchTerm}
+                          onChange={handleChange}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                  </Col>
+                </Row>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -144,15 +164,72 @@ const Groups = () => {
                   </tr>
                 </thead>
                 <tbody>
-                {searchTerm
+                  {next? (searchTerm
+                      ? searchResults.map((item, index) => (
+                          <Render key={index} item={item} onToggle={onToggle} />
+                        ))
+                      : data1.groups.map((item) => (
+                          <Render
+                            item={item}
+                            key={item.id}
+                            onToggle={onToggle}
+                          />
+                        ))
+                  ): (searchTerm
                     ? searchResults.map((item, index) => (
                         <Render key={index} item={item} onToggle={onToggle} />
                       ))
                     : data.groups.map((item) => (
                         <Render item={item} key={item.id} onToggle={onToggle} />
-                      ))}
+                      )))}
                 </tbody>
               </Table>
+              <CardFooter className="py-4">
+                <nav aria-label="...">
+                  <Pagination
+                    className="pagination justify-content-end mb-0"
+                    listClassName="justify-content-end mb-0"
+                  >
+                    <PaginationItem className="disabled">
+                      <PaginationLink
+                        href="#pablo"
+                        onClick={(e) => e.preventDefault()}
+                        tabIndex="-1"
+                      >
+                        <i className="fas fa-angle-left" />
+                        <span className="sr-only">Previous</span>
+                      </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem className={!next?"active":""}>
+                      <PaginationLink
+                        href="#pablo"
+                        onClick={(e) => { setNext(false);}}
+                      >
+                        1
+                      </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem className={next?"active":""}>
+                      <PaginationLink
+                        href="#pablo"
+                        onClick={(e) => {
+                          setNext(true);
+                        }}
+                      >
+                        2 <span className="sr-only">(current)</span>
+                      </PaginationLink>
+                    </PaginationItem>
+                    <PaginationItem>
+                      <PaginationLink
+                        href="#pablo"
+                        onClick={(e) => e.nextPage()}
+                      >
+                        <i className="fas fa-angle-right" />
+                        <span className="sr-only">Next</span>
+                      </PaginationLink>
+                    </PaginationItem>
+                  </Pagination>
+                </nav>
+              </CardFooter>
             </Card>
           </div>
         </Row>
@@ -162,7 +239,7 @@ const Groups = () => {
 };
 
 function Render({ item, onToggle }) {
-  const [toggle, setToggle] = useState(item.blocked);
+  const [toggle, setToggle] = useState(!item.blocked);
   return (
     <tr>
       <th>
@@ -173,7 +250,7 @@ function Render({ item, onToggle }) {
             setToggle(!toggle);
           }}
         />
-        {toggle == false ? <span>Active</span> : <span>Block</span>}
+        {toggle == !false ? <span>Active</span> : <span>Block</span>}
       </th>
       <td>
         <Avatar alt="..." src={item.avatar} />
@@ -199,9 +276,7 @@ function Render({ item, onToggle }) {
           ))
         } */}
       </td>
-      <td>
-        {item.posts.length}
-      </td>
+      <td>{item.posts.length}</td>
       <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
       {/* <td className="text-center">
         <UncontrolledDropdown>

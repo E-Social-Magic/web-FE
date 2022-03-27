@@ -49,6 +49,7 @@
     "@fortawesome/fontawesome-free": "5.15.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@mui/material": "^5.5.1",
+    "@syncfusion/ej2-react-grids": "^19.4.56",
     "axios": "^0.26.0",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",

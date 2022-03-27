@@ -4,52 +4,35 @@ import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar, Doughnut } from "react-chartjs-2";
+import { Line, Pie, Bar, Doughnut } from "react-chartjs-2";
 // reactstrap components
 import {
   Button,
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
-  Progress,
-  Table,
   Container,
   Row,
   Col,
 } from "reactstrap";
 import axios from "axios";
 import Cookies from "universal-cookie";
-// core components
-// import {
-//   chartOptions,
-//   parseOptions,
-//   chartExample1,
-//   chartExample2,
-// } from "variables/charts.js";
-
 import Header from "components/Headers/Header.js";
 
 const Dashboard = (props) => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
-
-  // if (window.Chart) {
-  //   parseOptions(Chart, chartOptions());
-  // }
-
-  const toggleNavs = (e, index) => {
-    e.preventDefault();
-    setActiveNav(index);
-    setChartExample1Data("data" + index);
-  };
-
   const cookies = new Cookies();
-  const [Data, setData] = useState({ groups: [] });
+  const [Group, setGroup] = useState({ groups: [] });
+  const [Payment, setPayment] = useState({ payments: [] });
+  const [PaymentOut, setPaymentOut] = useState({ payments: [] });
+  const [dateRange, setDateRange] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const [amount1, setAmount1] = useState(0);
+  const [dataChart, setDataChart] = useState([]);
+
+  console.log("amount", amount);
+
   const data = {
-    labels: Data.groups.map((o) => o.group_name),
+    labels: Group.groups.map((o) => o.group_name),
 
     datasets: [
       {
@@ -59,19 +42,19 @@ const Dashboard = (props) => {
         backgroundColor: "#c45850",
         borderColor: "rgb(41, 33, 116,0.5)",
         pointHitRadius: 20,
-        data: Data.groups.map((o) => parseFloat(o.user_id.length)),
+        data: Group.groups.map((o) => parseFloat(o.user_id.length)),
       },
     ],
   };
   const data1 = {
-    labels: Data.groups.map((o) => o.group_name),
+    labels: Group.groups.map((o) => o.group_name),
 
     datasets: [
       {
         label: "Users",
         fill: false,
         lineTension: 0.0,
-        backgroundColor: [  
+        backgroundColor: [
           "#8e5ea2",
           "#3cba9f",
           "#e8c3b9",
@@ -81,59 +64,122 @@ const Dashboard = (props) => {
           "#C5D8A4",
           "#BB9981",
           "#534340",
-          "#3e95cd"
+          "#3e95cd",
+          "#1B1A17",
+          "#F0A500",
+          "#E45826",
+          "#E6D5B8",
         ],
         borderColor: "rgb(41, 33, 116,0.5)",
         pointHitRadius: 20,
-        
-        data: Data.groups.map((o) => parseFloat(o.posts.length)),
+        data: Group.groups.map((o) => parseFloat(o.posts.length)),
       },
     ],
   };
-  // const data1 = {
-  //   labels: Data.groups.map((o) => o.group_name),
 
-  //   datasets: [
-  //     {
-  //       label: "users",
-  //       fill: false,
-  //       lineTension: 0.0,
-  //       backgroundColor: "rgb(41, 33, 116,0.5)",
-  //       borderColor: "rgb(41, 33, 116,0.5)",
-  //       pointHitRadius: 20,
-  //       data: Data.groups.map((o) => parseFloat(o.posts.length)),
-  //     },
-  //   ],
-  // };
-  useEffect(async () => {
-    const result = await axios.get(
-      "https://web-be-2-idkrb.ondigitalocean.app/api/groups",
+  async function getGroups() {
+    return await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/groups?offset=1&limit=50",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
         },
       }
     );
-    setData(result.data);
-    console.log(data.groups);
-  }, []);
-  // if(!Data)
-  // {
-  //   return <Loading/>;
-  // }
+  }
+  async function getPaymentOut() {
+    return await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/paymentOuts",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+  }
+  async function getPayment() {
+    return await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/payments",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+  }
+  useEffect(async () => {
+    const groups = (await getGroups()).data;
+    setGroup(groups);
 
+    const payment = (await getPayment()).data.payments;
+    setPayment(payment);
+
+    const paymentOuts = (await getPaymentOut()).data.payments;
+    setPaymentOut(paymentOuts);
+
+    const arrRange = payment.map((v) =>
+      new Date(v.createdAt).toLocaleDateString("en-US")
+    );
+    let dateArray = [];
+    arrRange.map((v, i, arr) => {
+      if (!dateArray.includes(v)) dateArray.push(v);
+    });
+    setDateRange(dateArray);
+    const dataChart = dateArray.map((v) => {
+      const arrayAmount = payment
+        .filter(
+          (item) => new Date(item.createdAt).toLocaleDateString("en-US") == v
+        )
+        .map((value) => Number(value.amount));
+      const sumPayment = arrayAmount.reduce((prev, current) => prev + current);
+      const arrayAmountOut = paymentOuts
+        .filter(
+          (item) => new Date(item.createdAt).toLocaleDateString("en-US") == v
+        )
+        .map((value) => Number(value.amount));
+      const sumPaymentOut = arrayAmountOut.reduce(
+        (prev, current) => prev + current
+      );
+      return { in: sumPayment, out: sumPaymentOut };
+    });
+    setDataChart(dataChart);
+  }, []);
+  console.log(dataChart);
+  const deviceSaleData = {
+    labels: dateRange.map((item) => item),
+
+    datasets: [
+      {
+        label: "Payment in",
+        data: dataChart.map((o) => o.in),
+        backgroundColor: "#a461d8",
+        borderColor: "#a461d8",
+        borderWidth: 1,
+        fill: false,
+      },
+      {
+        label: "Payment out",
+        data: dataChart.map((o) => o.out),
+        // dataChart.map((o) => o.out),
+        backgroundColor: "#fc5a5a",
+        borderColor: "#fc5a5a",
+        borderWidth: 1,
+        fill: false,
+      },
+    ],
+  };
   return (
     <>
       <Header />
       {/* Page content */}
-      {console.log(Data)}
-      {!Data ? (
+      {console.log(Group)}
+      {!Group ? (
         <div>Loading</div>
       ) : (
         <>
           <Container className="mt--7" fluid>
-            <Row>
-              <Col className="mb-5 mb-xl-0" xl="8">
+            <Row className="mt-5">
+              <Col className="mb-5 mb-xl-0">
                 <Card className="bg-gradient-default shadow">
                   <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
@@ -141,7 +187,10 @@ const Dashboard = (props) => {
                         <h6 className="text-uppercase text-light ls-1 mb-1">
                           Overview
                         </h6>
-                        <h2 className="text-white mb-0">Number of users in subjects</h2>
+                        <h3 className="text-white mb-0">
+                          Statistics of the amount of payment in and out of each
+                          day.
+                        </h3>
                       </div>
                     </Row>
                   </CardHeader>
@@ -149,16 +198,43 @@ const Dashboard = (props) => {
                     {/* Chart */}
                     <div className="chart">
                       <Bar
-                     	height={10}
-                       options={{
-                         maintainAspectRatio: false
-                       }}
-                    data={data}
-                    // options={chartExample1.options}
-                    // getDatasetAtEvent={(e) => console.log(e)}
-                  />
-                      {/* <Bar data={data} /> */}
-                      {/* <Line data={data1}/> */}
+                        height={10}
+                        options={{
+                          maintainAspectRatio: false,           
+                        }}
+                        data={deviceSaleData}
+                      />
+                    </div>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+            <br></br>
+            <Row>
+              <Col className="mb-5 mb-xl-0" xl="8">
+                <Card className=" shadow">
+                  <CardHeader className="bg-transparent">
+                    <Row className="align-items-center">
+                      <div className="col">
+                        <h6 className="text-uppercase text-light ls-1 mb-1">
+                          Overview
+                        </h6>
+                        <h3 className="text-white mb-0">
+                          Statistics of the number of users in each group.
+                        </h3>
+                      </div>
+                    </Row>
+                  </CardHeader>
+                  <CardBody>
+                    {/* Chart */}
+                    <div className="chart">
+                      <Bar
+                        height={10}
+                        options={{
+                          maintainAspectRatio: false,
+                        }}
+                        data={data}
+                      />
                     </div>
                   </CardBody>
                 </Card>
@@ -171,7 +247,9 @@ const Dashboard = (props) => {
                         <h6 className="text-uppercase text-muted ls-1 mb-1">
                           Performance
                         </h6>
-                        <h2 className="mb-0">Number of posts in subjects</h2>
+                        <h3 className="mb-0">
+                          Statistics of the number of posts in each group.
+                        </h3>
                       </div>
                     </Row>
                   </CardHeader>
@@ -179,18 +257,18 @@ const Dashboard = (props) => {
                     {/* Chart */}
                     <div className="chart">
                       <Doughnut
-                       	height={1}
-                         options={{
-                           maintainAspectRatio: false
-                         }}
-                    data={data1}
-               
-                  />
+                        height={1}
+                        options={{
+                          maintainAspectRatio: false,
+                        }}
+                        data={data1}
+                      />
                     </div>
                   </CardBody>
                 </Card>
               </Col>
             </Row>
+
             {/* <Row className="mt-5">
               <Col className="mb-5 mb-xl-0" xl="8">
                 <Card className="shadow">

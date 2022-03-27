@@ -25,6 +25,7 @@ import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
 import Avatar from "@mui/material/Avatar";
 import dateFormat from "dateformat";
+// import {GridComponent} from '@syncfunction/ej2-react-grids';
 
 const Users = () => {
   const [data, setData] = useState({ users: [] });
@@ -112,8 +113,9 @@ const Users = () => {
               </Row>
               <Table
                 className="align-items-center table-dark table-flush"
-                responsive
-              >
+                responsive    
+                // toolbar={{'PdfExport'}}
+                >
                 <thead className="thead-dark">
                   <tr>
                     <th scope="col" style={{ fontSize: "13px" }}>
@@ -132,10 +134,7 @@ const Users = () => {
                       Follower
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Followinng
-                    </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
-                      Coins
+                      Following
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       Number of subjects
@@ -148,7 +147,7 @@ const Users = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody  >
                   {searchTerm
                     ? searchResults.map((item, index) => (
                         <Render key={index} item={item} onToggle={onToggle} />
@@ -167,7 +166,7 @@ const Users = () => {
 };
 
 function Render({ item, onToggle }) {
-  const [toggle, setToggle] = useState(item.blocked);
+  const [toggle, setToggle] = useState(!item.blocked);
   return (
     <tr>
       <th scope="row" key={item}>
@@ -178,7 +177,7 @@ function Render({ item, onToggle }) {
             setToggle(!toggle);
           }}
         />
-        {toggle == false ? <span>Active</span> : <span>Block</span>}
+        {toggle == !false ? <span>Active</span> : <span>Block</span>}
       </th>
       <th scope="row">
         <Avatar alt="..." src={item.avatar} />
@@ -187,7 +186,6 @@ function Render({ item, onToggle }) {
       <td>{item.email}</td>
       <td>{item.follower.length}</td>
       <td>{item.following.length}</td>
-      <td>{item.coins}</td>
       <td>{item.subjects.length}</td>
       <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
       <td className="text-right">

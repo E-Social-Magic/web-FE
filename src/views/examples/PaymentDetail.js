@@ -74,7 +74,7 @@ const UserDetail = ({ match }) => {
                       <hr className="my-4" />
                       <div className="pl-lg-4">
                         <Row>
-                          <Col lg="4">
+                          <Col lg="6">
                             <FormGroup>
                               <label
                                 className="form-control-label"
@@ -88,7 +88,7 @@ const UserDetail = ({ match }) => {
                               />
                             </FormGroup>
                           </Col>
-                          <Col lg="4">
+                          <Col lg="6">
                             <FormGroup>
                               <label
                                 className="form-control-label"
@@ -102,61 +102,20 @@ const UserDetail = ({ match }) => {
                               />
                             </FormGroup>
                           </Col>
-                          <Col lg="4">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-country"
-                              >
-                                Response Time
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                Value={data.data.responseTime}
-                              />
-                            </FormGroup>
-                          </Col>
+          
                         </Row>
                         <Row>
-                          <Col lg="4">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-city"
-                              >
-                                extraData
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                Value={data.data.extraData}
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="4">
+                          <Col >
                             <FormGroup>
                               <label
                                 className="form-control-label"
                                 htmlFor="input-country"
                               >
-                                message
+                                Message
                               </label>
                               <Input
                                 className="form-control-alternative"
                                 Value={data.data.message}
-                              />
-                            </FormGroup>
-                          </Col>
-                          <Col lg="4">
-                            <FormGroup>
-                              <label
-                                className="form-control-label"
-                                htmlFor="input-country"
-                              >
-                                payType
-                              </label>
-                              <Input
-                                className="form-control-alternative"
-                                Value={data.data.payType}
                               />
                             </FormGroup>
                           </Col>
