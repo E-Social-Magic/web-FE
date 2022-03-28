@@ -54,6 +54,9 @@ const Payments = () => {
               >
                 <thead className="thead-dark">
                   <tr>
+                  <th scope="col" style={{ fontSize: "13px" }}>
+                      Type Transfer
+                    </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       Order Id
                     </th>
@@ -67,9 +70,6 @@ const Payments = () => {
                       User Name
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                     Try
-                    </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -77,13 +77,15 @@ const Payments = () => {
                 <tbody>
                   {data.payments.map((item) => (
                     <tr>
-                      <th scope="row" key={item}>
+                         <th scope="row" key={item}>
+                        {item.typeTransfer}
+                      </th>
+                      <th scope="row">
                         {item.orderId}
                       </th>
-                      <th scope="row">{item.amount}{console.log(item.amount)}</th>
+                      <th scope="row">{item.amount}</th>
                       <td>{item.message}</td>
                       <td>{item.username}</td>
-                      <td>{dateFormat(item.createdAt, "dddd")}</td>
                       <td className="text-right">
                         <UncontrolledDropdown>
                           <DropdownToggle

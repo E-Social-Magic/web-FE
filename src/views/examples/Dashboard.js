@@ -150,7 +150,7 @@ const Dashboard = (props) => {
 
     datasets: [
       {
-        label: "Payment in",
+        label: "Income",
         data: dataChart.map((o) => o.in),
         backgroundColor: "#a461d8",
         borderColor: "#a461d8",
@@ -158,7 +158,7 @@ const Dashboard = (props) => {
         fill: false,
       },
       {
-        label: "Payment out",
+        label: "Outcome",
         data: dataChart.map((o) => o.out),
         // dataChart.map((o) => o.out),
         backgroundColor: "#fc5a5a",
@@ -212,7 +212,7 @@ const Dashboard = (props) => {
             <br></br>
             <Row>
               <Col className="mb-5 mb-xl-0" xl="8">
-                <Card className=" shadow">
+                <Card className="bg-gradient-default shadow">
                   <CardHeader className="bg-transparent">
                     <Row className="align-items-center">
                       <div className="col">

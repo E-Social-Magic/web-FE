@@ -96,50 +96,49 @@ const UserDetail = ({ match }) => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                             <Avatar
-                        style={{width: "85px", height: "85px"}}
+                      <img
                         alt="..."
                         className="rounded-circle"
-                        src={data.user.avatar
-                        }/>
+                        src={
+                        data.user.avatar
+                        }
+                      />
                     </a>
                   </div>
                 </Col>
               </Row>
-              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4"></CardHeader>
+             
+              <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                <div className="d-flex justify-content-between">
+                 
+                </div>
+              </CardHeader>
               <CardBody className="pt-0 pt-md-4">
-                {/* <Row>
+                <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
                         <span className="heading">
-                          {data.user.follower.length}
+                          {data.user.follower}
                           </span>
                         <span className="description">Follower</span>
                       </div>
                       <div>
                         <span className="heading">
-                          {data.user.following.length}
+                          {data.user.following}
                           </span>
                         <span className="description">Following</span>
                       </div>
                
                     </div>
                   </div>
-                </Row> */}
+                </Row>
                 <div className="text-center">
                   <h3>
                     {data.user.username}
                     {/* <span className="font-weight-light">, 27</span> */}
                   </h3>
-                  <div className="h5 font-weight-300">
-                    <i className="ni location_pin mr-2" />
-                    Da Nang city, Viet Name
-                  </div>
-                  <div className="h5 mt-4">
-                    <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Magic team
-                  </div>
+                
                 </div>
               </CardBody>
             </Card>
@@ -192,54 +191,7 @@ const UserDetail = ({ match }) => {
                   </div>
                   {/* Address */}
 
-                  <div className="pl-lg-4">
-                    <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-city"
-                          >
-                            Role
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            value={data.user.role}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Coins
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            value={data.user.coins}
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        {/* <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
-                          />
-                        </FormGroup> */}
-                      </Col>
-                    </Row>
-                  </div> 
+                  
                 </Form>
               </CardBody>
             </Card>

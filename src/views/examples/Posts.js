@@ -205,7 +205,7 @@ function Render({ item, onToggle }) {
           </p>
         ))}
       </td>
-      <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+      <td>{new Date(item.createdAt).toLocaleDateString("en-US")}</td>
       <td>{item.votes}</td>
       {/* <td className="text-right">
         <UncontrolledDropdown>

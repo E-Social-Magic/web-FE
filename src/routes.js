@@ -52,14 +52,14 @@ var routes = [
   },
   {
     path: "/payments",
-    name: "Payment in",
+    name: "Income",
     icon: "ni ni-money-coins text-orange",
     component: Payments,
     layout: "/admin",
   },
   {
     path: "/payments-out",
-    name: "Payment out",
+    name: "Outcome",
     icon: "ni ni-money-coins text-yellow",
     component: PaymentOuts,
     layout: "/admin",

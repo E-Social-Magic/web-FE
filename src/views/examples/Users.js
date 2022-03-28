@@ -13,7 +13,7 @@ import {
   Input,
   InputGroup,
   Container,
-  Col
+  Col,
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
@@ -25,7 +25,6 @@ import Cookies from "universal-cookie";
 import ToggleButton from "react-toggle-button";
 import Avatar from "@mui/material/Avatar";
 import dateFormat from "dateformat";
-// import {GridComponent} from '@syncfunction/ej2-react-grids';
 
 const Users = () => {
   const [data, setData] = useState({ users: [] });
@@ -111,11 +110,11 @@ const Users = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Table
+              <Table id="table-to-xls"
                 className="align-items-center table-dark table-flush"
-                responsive    
+                responsive
                 // toolbar={{'PdfExport'}}
-                >
+              >
                 <thead className="thead-dark">
                   <tr>
                     <th scope="col" style={{ fontSize: "13px" }}>
@@ -147,7 +146,7 @@ const Users = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody  >
+                <tbody>
                   {searchTerm
                     ? searchResults.map((item, index) => (
                         <Render key={index} item={item} onToggle={onToggle} />
@@ -187,7 +186,7 @@ function Render({ item, onToggle }) {
       <td>{item.follower.length}</td>
       <td>{item.following.length}</td>
       <td>{item.subjects.length}</td>
-      <td>{dateFormat(item.createdAt, "mmmm dS, yyyy")}</td>
+      <td>{new Date(item.createdAt).toLocaleDateString("en-US")}</td>
       <td className="text-right">
         <UncontrolledDropdown>
           <DropdownToggle
