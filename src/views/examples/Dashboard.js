@@ -125,12 +125,14 @@ const Dashboard = (props) => {
       if (!dateArray.includes(v)) dateArray.push(v);
     });
     setDateRange(dateArray);
+
     const dataChart = dateArray.map((v) => {
       const arrayAmount = payment
         .filter(
           (item) => new Date(item.createdAt).toLocaleDateString("en-US") == v
         )
         .map((value) => Number(value.amount));
+
       const sumPayment = arrayAmount.reduce((prev, current) => prev + current);
       const arrayAmountOut = paymentOuts
         .filter(
@@ -138,13 +140,14 @@ const Dashboard = (props) => {
         )
         .map((value) => Number(value.amount));
       const sumPaymentOut = arrayAmountOut.reduce(
-        (prev, current) => prev + current
+        (prev, current) => prev + current,
+        0
       );
       return { in: sumPayment, out: sumPaymentOut };
     });
     setDataChart(dataChart);
   }, []);
-  console.log(dataChart);
+
   const deviceSaleData = {
     labels: dateRange.map((item) => item),
 
@@ -188,8 +191,7 @@ const Dashboard = (props) => {
                           Overview
                         </h6>
                         <h3 className="text-white mb-0">
-                          Statistics of the amount of payment in and out of each
-                          day.
+                          Statistics of income and outcome every day.
                         </h3>
                       </div>
                     </Row>
@@ -200,7 +202,7 @@ const Dashboard = (props) => {
                       <Bar
                         height={10}
                         options={{
-                          maintainAspectRatio: false,           
+                          maintainAspectRatio: false,
                         }}
                         data={deviceSaleData}
                       />

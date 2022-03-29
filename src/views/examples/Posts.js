@@ -13,12 +13,13 @@ import {
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import React from "react";
 import ToggleButton from "react-toggle-button";
 import Cookies from "universal-cookie";
-import dateFormat from "dateformat";
+import { Image } from 'antd';
+import 'antd/dist/antd.css';
 
 const Posts = () => {
   const [data, setData] = useState({ posts: [] });
@@ -113,19 +114,16 @@ const Posts = () => {
                       Visible
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Content
-                    </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
                       Username
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       Status
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Hide name
+                      Title
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Title
+                      Content
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       Images
@@ -164,6 +162,10 @@ const Posts = () => {
 
 function Render({ item, onToggle }) {
   const [toggle, setToggle] = useState(!item.blocked);
+  const vidRef = useRef(null);
+  const handlePlayVideo = () => {
+    vidRef.current.play();
+  }
   return (
     <tr>
       <th scope="row" key={item}>
@@ -175,33 +177,37 @@ function Render({ item, onToggle }) {
           }}
         />
         {toggle == !false ? <span>Active</span> : <span>Block</span>}
-      </th>   
-      <td>{item.content}</td>
+      </th>  
       <th scope="row">
         <span className="mb-0 text-sm">{item.username}</span>
-      </th>
+      </th> 
       <td>
         {item.private == false ? <span>Public</span> : <span>Private</span>}
       </td>
-      <td>{item.private == false ? <span>No</span> : <span>Yes</span>}</td>
       <th scope="row">
         <span className="mb-0 text-sm">{item.title}</span>
       </th>
+      <td>{item.content}</td>
       <td>
         {item.images.map((ite) => (
           <p>
-            <img src={ite} alt="E-social" border="0" width={"150px"}>
+              <Image.PreviewGroup>
+            <Image src={ite} alt="E-social" border="0" width={"150px"}>
               {console.log(ite)}
-            </img>
+            </Image>
+            </Image.PreviewGroup>
           </p>
         ))}
       </td>
       <td>
         {item.videos.map((ite) => (
           <p>
-            <video controls width="150px">
+            <video ref={vidRef} controls width="150px">
               <source src={ite} border="0" />
             </video>
+            {/* <button onClick={handlePlayVideo}>
+                Play!
+              </button> */}
           </p>
         ))}
       </td>

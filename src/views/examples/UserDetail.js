@@ -75,7 +75,7 @@ const UserDetail = ({ match }) => {
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
-          <Row>
+          <Row style ={{width:"600px"}}>
             <Col lg="7" md="10">
               <h3 className="display-4  text-white">
                 This is {data.user.username}.
@@ -96,13 +96,12 @@ const UserDetail = ({ match }) => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                      <img
-                        alt="..."
-                        className="rounded-circle"
-                        src={
-                        data.user.avatar
-                        }
-                      />
+                    <Avatar
+                          alt="..."
+                          style={{ width: "165px", height: "150px" }}
+                          className="rounded-circle center"
+                          src={data.user.avatar}
+                        />
                     </a>
                   </div>
                 </Col>

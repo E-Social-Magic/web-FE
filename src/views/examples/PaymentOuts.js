@@ -1,5 +1,4 @@
 import {
-  Badge,
   Card,
   CardHeader,
   DropdownMenu,
@@ -8,8 +7,7 @@ import {
   DropdownToggle,
   Table,
   Container,
-  Row,
-  Media,
+  Row
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
@@ -17,8 +15,7 @@ import Header from "components/Headers/Header.js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import dateFormat from 'dateformat';
-import i18next from '../../i18n'
+import NumberFormat from 'react-number-format';
 
 const PaymentOuts = () => {
   const [data, setData] = useState({ payments: [] });
@@ -34,7 +31,7 @@ const PaymentOuts = () => {
       }
     );
     setData(result.data);
-    console.log(Mess);
+    console.log(result.data);
   }, []);
 
   return (
@@ -50,7 +47,7 @@ const PaymentOuts = () => {
           <div className="col">
             <Card className="bg-default shadow">
               <CardHeader className="bg-transparent border-0">
-                <h3 className="text-white mb-0">Payment outs</h3>
+                <h3 className="text-white mb-0">Outcome</h3>
               </CardHeader>
               <Table
                 className="align-items-center table-dark table-flush"
@@ -65,9 +62,6 @@ const PaymentOuts = () => {
                       Message
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Result Code
-                    </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
                       Display Name
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
@@ -80,9 +74,6 @@ const PaymentOuts = () => {
                       Created At
                     </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
-                      Updated At
-                    </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -91,15 +82,13 @@ const PaymentOuts = () => {
                   {data.payments.map((item) =>(
                   <tr>
                     <th scope="row" key={item}>
-                      {item.amount}
+                       <NumberFormat value={item.amount} displayType={'text'} thousandSeparator={true}/> VND
                     </th>
                     <td >{message(item.resultCode)}</td>
-                    <td>{item.resultCode}</td>
                     <td>{item.displayName}</td>
                     <td>{item.username}</td>
                     <td>{item.phone}</td>
                     <td>{new Date(item.createdAt).toLocaleDateString("en-US")}</td>       
-                    <td>{new Date(item.updatedAt).toLocaleDateString("en-US")}</td>
                     <td className="text-right">
                       <UncontrolledDropdown>
                         <DropdownToggle

@@ -16,7 +16,7 @@ import Header from "components/Headers/Header.js";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import dateFormat from "dateformat";
+import NumberFormat from 'react-number-format';
 
 const Payments = () => {
   const [data, setData] = useState({ payments: [] });
@@ -54,9 +54,6 @@ const Payments = () => {
               >
                 <thead className="thead-dark">
                   <tr>
-                  <th scope="col" style={{ fontSize: "13px" }}>
-                      Type Transfer
-                    </th>
                     <th scope="col" style={{ fontSize: "13px" }}>
                       Order Id
                     </th>
@@ -69,7 +66,7 @@ const Payments = () => {
                     <th scope="col" style={{ fontSize: "13px" }}>
                       User Name
                     </th>
-                    <th scope="col" style={{ fontSize: "13px" }}>
+                    <th scope="col" style={{ fontSize: "13px"}}>
                       <i className="ni ni-settings-gear-65"></i>
                     </th>
                   </tr>
@@ -77,13 +74,11 @@ const Payments = () => {
                 <tbody>
                   {data.payments.map((item) => (
                     <tr>
-                         <th scope="row" key={item}>
-                        {item.typeTransfer}
-                      </th>
                       <th scope="row">
                         {item.orderId}
                       </th>
-                      <th scope="row">{item.amount}</th>
+                      <td>
+                      <NumberFormat value={item.amount} displayType={'text'} thousandSeparator={true}/> VND</td>
                       <td>{item.message}</td>
                       <td>{item.username}</td>
                       <td className="text-right">

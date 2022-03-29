@@ -37,12 +37,15 @@ const UserHeader = () => {
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
-          <Row>
+        
+          <Row style ={{width:"1000px"}}>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello {data.user.username}</h1>
+              <h3 className="display-4  text-white">
+                This is {data.user.username}.
+              </h3>
               <p className="text-white mt-0 mb-5">
                 This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+                with your work and manage your projects or assigned tasks.
               </p>
             </Col>
           </Row>
