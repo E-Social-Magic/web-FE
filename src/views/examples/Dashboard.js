@@ -191,7 +191,7 @@ const Dashboard = (props) => {
                           Overview
                         </h6>
                         <h3 className="text-white mb-0">
-                          Statistics of income and outcome every day.
+                          Statistics of depositCoins and withdraw money every day.
                         </h3>
                       </div>
                     </Row>

@@ -56,7 +56,6 @@ const UserDetail = ({ match }) => {
   // };
 
   return (
-    
     <>
       {/* <UserHeader /> */}
       <div
@@ -75,7 +74,7 @@ const UserDetail = ({ match }) => {
         <span className="mask bg-gradient-default opacity-8" />
         {/* Header container */}
         <Container className="d-flex align-items-center" fluid>
-          <Row style ={{width:"600px"}}>
+          <Row style={{ width: "600px" }}>
             <Col lg="7" md="10">
               <h3 className="display-4  text-white">
                 This is {data.user.username}.
@@ -96,21 +95,19 @@ const UserDetail = ({ match }) => {
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
                     <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    <Avatar
-                          alt="..."
-                          style={{ width: "165px", height: "150px" }}
-                          className="rounded-circle center"
-                          src={data.user.avatar}
-                        />
+                      <img
+                        alt="..."
+                        style={{ width: "165px", height: "160px" }}
+                        className="rounded-circle center"
+                        src={data.user.avatar}
+                      />
                     </a>
                   </div>
                 </Col>
               </Row>
-             
+
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                <div className="d-flex justify-content-between">
-                 
-                </div>
+                <div className="d-flex justify-content-between"></div>
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
@@ -118,17 +115,16 @@ const UserDetail = ({ match }) => {
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                       <div>
                         <span className="heading">
-                          {data.user.follower}
-                          </span>
+                          {/* {data.user.follower === null?"0":"data.user.follower.length"} */}
+                          0</span>
                         <span className="description">Follower</span>
                       </div>
                       <div>
                         <span className="heading">
-                          {data.user.following}
-                          </span>
+                          {/* {data.user.following === null?"0":"data.user.following.length"} */}
+                        0</span>
                         <span className="description">Following</span>
                       </div>
-               
                     </div>
                   </div>
                 </Row>
@@ -137,7 +133,6 @@ const UserDetail = ({ match }) => {
                     {data.user.username}
                     {/* <span className="font-weight-light">, 27</span> */}
                   </h3>
-                
                 </div>
               </CardBody>
             </Card>
@@ -187,10 +182,56 @@ const UserDetail = ({ match }) => {
                         </FormGroup>
                       </Col>
                     </Row>
+                    <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Phone number
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.phone}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Joined
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={new Date(
+                              data.user.createdAt
+                            ).toLocaleDateString("en-US")}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    {/* <Row>
+                      <Col lg="6">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            Number of subjects
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            Value={data.user.subjects.length}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row> */}
                   </div>
                   {/* Address */}
-
-                  
                 </Form>
               </CardBody>
             </Card>

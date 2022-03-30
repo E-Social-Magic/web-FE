@@ -13,6 +13,10 @@ import {
   Input,
   InputGroup,
   Container,
+  CardFooter,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
   Col,
 } from "reactstrap";
 
@@ -30,6 +34,8 @@ const Users = () => {
   const [data, setData] = useState({ users: [] });
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [data1, setData1] = useState({ payments: [] });
+  const [next, setNext] = useState(false);
 
   const cookies = new Cookies();
   useEffect(async () => {
@@ -43,6 +49,19 @@ const Users = () => {
     );
     console.log(result.data.users);
     setData(result.data);
+  }, []);
+
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/users?offset=2",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+    setData1(result.data);
+    console.log(result.data);
   }, []);
 
   const onToggle = (id) => {
@@ -110,7 +129,8 @@ const Users = () => {
                   </FormGroup>
                 </Col>
               </Row>
-              <Table id="table-to-xls"
+              <Table
+                id="table-to-xls"
                 className="align-items-center table-dark table-flush"
                 responsive
                 // toolbar={{'PdfExport'}}
@@ -147,7 +167,19 @@ const Users = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchTerm
+                  {next
+                    ? searchTerm
+                      ? searchResults.map((item, index) => (
+                          <Render key={index} item={item} onToggle={onToggle} />
+                        ))
+                      : data1.users.map((item) => (
+                          <Render
+                            item={item}
+                            key={item.id}
+                            onToggle={onToggle}
+                          />
+                        ))
+                    : searchTerm
                     ? searchResults.map((item, index) => (
                         <Render key={index} item={item} onToggle={onToggle} />
                       ))
@@ -156,6 +188,58 @@ const Users = () => {
                       ))}
                 </tbody>
               </Table>
+              {data.users.length >= 10 ? (
+                <CardFooter className="py-4">
+                  <nav aria-label="...">
+                    <Pagination
+                      className="pagination justify-content-end mb-0"
+                      listClassName="justify-content-end mb-0"
+                    >
+                      <PaginationItem className="disabled">
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                          tabIndex="-1"
+                        >
+                          <i className="fas fa-angle-left" />
+                          <span className="sr-only">Previous</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem className={!next ? "active" : ""}>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => {
+                            setNext(false);
+                          }}
+                        >
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem className={next ? "active" : ""}>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => {
+                            setNext(true);
+                          }}
+                        >
+                          2 <span className="sr-only">(current)</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.nextPage()}
+                        >
+                          <i className="fas fa-angle-right" />
+                          <span className="sr-only">Next</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                    </Pagination>
+                  </nav>
+                </CardFooter>
+              ) : (
+                ""
+              )}
             </Card>
           </div>
         </Row>

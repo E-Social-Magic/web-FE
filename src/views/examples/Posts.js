@@ -9,7 +9,11 @@ import {
   Input,
   InputGroup,
   Container,
-  Col
+  Col,
+  CardFooter,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 // core components
 import Header from "components/Headers/Header.js";
@@ -18,17 +22,19 @@ import axios from "axios";
 import React from "react";
 import ToggleButton from "react-toggle-button";
 import Cookies from "universal-cookie";
-import { Image } from 'antd';
-import 'antd/dist/antd.css';
+import { Image } from "antd";
+import "antd/dist/antd.css";
 
 const Posts = () => {
   const [data, setData] = useState({ posts: [] });
+  const [data1, setData1] = useState({ payments: [] });
+  const [next, setNext] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const cookies = new Cookies();
   useEffect(async () => {
     const result = await axios(
-      "https://web-be-2-idkrb.ondigitalocean.app/api/posts/admin",
+      "https://web-be-2-idkrb.ondigitalocean.app/api/posts",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -36,6 +42,19 @@ const Posts = () => {
       }
     );
     setData(result.data);
+    console.log(result.data);
+  }, []);
+
+  useEffect(async () => {
+    const result = await axios.get(
+      "https://web-be-2-idkrb.ondigitalocean.app/api/posts?offset=2",
+      {
+        headers: {
+          Authorization: "Bearer " + cookies.get("token"),
+        },
+      }
+    );
+    setData1(result.data);
     console.log(result.data);
   }, []);
 
@@ -56,8 +75,8 @@ const Posts = () => {
     setSearchTerm(event.target.value);
   };
   React.useEffect(() => {
-    const results = data.posts.filter(({content}) =>
-    content.toLowerCase().includes(searchTerm)
+    const results = data.posts.filter(({ content }) =>
+      content.toLowerCase().includes(searchTerm)
     );
     setSearchResults(results);
   }, [searchTerm]);
@@ -143,7 +162,19 @@ const Posts = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {searchTerm
+                  {next
+                    ? searchTerm
+                      ? searchResults.map((item, index) => (
+                          <Render key={index} item={item} onToggle={onToggle} />
+                        ))
+                      : data1.posts.map((item) => (
+                          <Render
+                            item={item}
+                            key={item.id}
+                            onToggle={onToggle}
+                          />
+                        ))
+                    : searchTerm
                     ? searchResults.map((item, index) => (
                         <Render key={index} item={item} onToggle={onToggle} />
                       ))
@@ -152,6 +183,58 @@ const Posts = () => {
                       ))}
                 </tbody>
               </Table>
+              {data.posts.length >= 10 ? (
+                <CardFooter className="py-4">
+                  <nav aria-label="...">
+                    <Pagination
+                      className="pagination justify-content-end mb-0"
+                      listClassName="justify-content-end mb-0"
+                    >
+                      <PaginationItem className="disabled">
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.preventDefault()}
+                          tabIndex="-1"
+                        >
+                          <i className="fas fa-angle-left" />
+                          <span className="sr-only">Previous</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem className={!next ? "active" : ""}>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => {
+                            setNext(false);
+                          }}
+                        >
+                          1
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem className={next ? "active" : ""}>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => {
+                            setNext(true);
+                          }}
+                        >
+                          2 <span className="sr-only">(current)</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                      <PaginationItem>
+                        <PaginationLink
+                          href="#pablo"
+                          onClick={(e) => e.nextPage()}
+                        >
+                          <i className="fas fa-angle-right" />
+                          <span className="sr-only">Next</span>
+                        </PaginationLink>
+                      </PaginationItem>
+                    </Pagination>
+                  </nav>
+                </CardFooter>
+              ) : (
+                ""
+              )}
             </Card>
           </div>
         </Row>
@@ -165,7 +248,7 @@ function Render({ item, onToggle }) {
   const vidRef = useRef(null);
   const handlePlayVideo = () => {
     vidRef.current.play();
-  }
+  };
   return (
     <tr>
       <th scope="row" key={item}>
@@ -177,24 +260,24 @@ function Render({ item, onToggle }) {
           }}
         />
         {toggle == !false ? <span>Active</span> : <span>Block</span>}
-      </th>  
+      </th>
       <th scope="row">
         <span className="mb-0 text-sm">{item.username}</span>
-      </th> 
+      </th>
       <td>
         {item.private == false ? <span>Public</span> : <span>Private</span>}
       </td>
       <th scope="row">
         <span className="mb-0 text-sm">{item.title}</span>
       </th>
-      <td>{item.content}</td>
+      <td  style={{ width: 100 }}>{item.content}</td>
       <td>
         {item.images.map((ite) => (
           <p>
-              <Image.PreviewGroup>
-            <Image src={ite} alt="E-social" border="0" width={"150px"}>
-              {console.log(ite)}
-            </Image>
+            <Image.PreviewGroup>
+              <Image src={ite} alt="E-social" border="0" width={"150px"}>
+                {console.log(ite)}
+              </Image>
             </Image.PreviewGroup>
           </p>
         ))}

@@ -75,7 +75,7 @@ const PaymentOutDetail = ({ match }) => {
                 <CardHeader className="bg-white border-0">
                 <Row className="align-items-center">
                   <Col xs="8">
-                    <h3 className="mb-0">Payment out detail</h3>
+                    <h3 className="mb-0">Withdrawal information</h3>
                   </Col>
                 </Row>
               </CardHeader>
@@ -190,17 +190,7 @@ function UserInfo({ idUser }) {
           <h6 className="heading-small text-muted mb-4">User information </h6>
           <hr className="my-4" />
           <div className="pl-lg-4">
-            {/* <Row className="order-lg-2" lg="3">
-              <div className="card-profile-image">
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                  <img
-                    alt="..."
-                    className="rounded-circle"
-                    src={data.user.avatar}
-                  />
-                </a>
-              </div>
-            </Row> */}
+ 
             <Row>
               <Col lg="6">
                 <FormGroup>
@@ -280,13 +270,13 @@ function UserInfo({ idUser }) {
 }
 
 function TranStatus({ data, id }) {
+  
   const [resultTran, setResultTran] = useState(data.resultCode);
-  console.log(id);
-  const Cancel = (id) => {
+
+  const Confirm = () => { 
     return axios.get(
       "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" +
-        id +
-        "?success=true",
+        id + "?success=true",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -295,11 +285,10 @@ function TranStatus({ data, id }) {
     );
   };
 
-  const Confirm = (id) => {
+  const Cancel = () => {
     return axios.get(
       "https://web-be-2-idkrb.ondigitalocean.app/api/withdraw/" +
-        id +
-        "?fail=true",
+        id + "?success=false",
       {
         headers: {
           Authorization: "Bearer " + cookies.get("token"),
@@ -310,6 +299,7 @@ function TranStatus({ data, id }) {
 
   return (
     <>
+    
       {resultTran === "7000" ? (
         <>
           <hr className="my-4" />
@@ -320,8 +310,8 @@ function TranStatus({ data, id }) {
                   <Button
                     className="bg-danger "
                     style={{ color: "white" }}
-                    disabled
-                    onClick={Cancel(id)}
+                  
+                    onClick={ Cancel }
                   >
                     CANCEL TRANSACTION <i className="ni ni-fat-remove"></i>
                   </Button>
@@ -334,8 +324,8 @@ function TranStatus({ data, id }) {
                   <Button
                     className="bg-success"
                     style={{ color: "white" }}
-                    disabled
-                    onClick={Confirm(id)}
+                
+                    onClick={Confirm}
                   >
                     CONFIRM TRANSACTION <i className="ni ni-check-bold"></i>
                   </Button>
